@@ -54,6 +54,7 @@ public class gestorVentana {
                 }
             });
             System.out.println("salgo del hilo");
+            // este no es el fichero que toca
         }
     }
 }
