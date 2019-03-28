@@ -12,7 +12,7 @@ import m03.uf5.p01.grup5.gestioHospital.vista.vista;
 
 /**
  *
- * @author miral
+ * @author Marc Cardenas, Raul Barrero, Roger Miralles
  */
 public class GestioHospital {
 
@@ -224,7 +224,7 @@ public class GestioHospital {
         vista.muestraTexto("Introdueix codi Enfermetat-----------------");
         int codiEnfermetat;
         codiEnfermetat = vista.pedirInt();
-
+        
         elObjeto.pacients.get(codhis).historial.visites.visitar(dia, mes, ano, hora, metge, elObjeto.malalties.get(codiEnfermetat));
         vista.muestraTexto(" Añadido a las visitas ");
     }
@@ -404,7 +404,7 @@ public class GestioHospital {
                     tempnif = vista.pedirString();
                     if (tempnif.length() > 8) {
                         tempnif = tempnif.substring(0, tempnif.length() - 1) + soloMayus(tempnif.substring(tempnif.length() - 1));
-                        System.out.println(elObjeto.pacient(tempnif));
+                        System.out.println(elObjeto.pacient(tempnif).nom);
                     } else {
                         vista.muestraTexto("Agrega tots els caracters amb la lletra.");
                     }

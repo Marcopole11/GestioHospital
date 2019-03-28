@@ -6,10 +6,12 @@
 package m03.uf5.p01.grup5.gestioHospital.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
- * @author miral
+ * @author Marc Cardenas, Raul Barrero, Roger Miralles
  */
 public class Visita {
 
@@ -50,15 +52,52 @@ public class Visita {
      * @param diagnostic malaltia que li van diagnosticar
      */
     public void visitar(int dia, int mes, int any, double hora, Metge metge, Malaltia diagnostic) {
+        String mt = metge.nom + " " + metge.cognom1;
+        visitar(dia, mes, any, hora, mt, diagnostic);
+    }
+    private void visitar(int dia, int mes, int any, double hora, String metge, Malaltia diagnostic) {
         if (this.metge.length() == 0) {
             this.data = LocalDateTime.of(any, mes, dia, (int) hora, (int) ((hora - (int) hora) * 100), 0);
-            this.metge = metge.nom + " " + metge.cognom1;
+            this.metge = metge;
             this.diagnostic = diagnostic;
         } else {
             if (nodo == null) {
                 nodo = new Visita();
             }
             nodo.visitar(dia, mes, any, hora, metge, diagnostic);
+        }
+    }
+    public String toCSV(){
+        if (metge.length() == 0) {
+            return "X";
+        } else {
+            String tato = listarCSV();
+            return tato.substring(0, tato.length()-1);
+        }
+    }
+    private String listarCSV() {
+        String printo = 
+                data.getDayOfMonth()+"-"+
+                data.getMonthValue()+"-"+
+                data.getYear()+"-"+
+                data.getHour()+"."+data.getMinute()
+                +","+metge+","+diagnostic.codi+","; 
+        if (nodo != null) {
+            printo += nodo.listarCSV();
+        }
+        return printo;
+    }
+    Visita(String[] csv, List<Malaltia> malalties) {
+        metge = "";
+        String[] fecha = csv[0].split("-");
+        visitar(Integer.parseInt(fecha[0]),
+                Integer.parseInt(fecha[1]),
+                Integer.parseInt(fecha[2]),
+                Double.parseDouble(fecha[3]),
+                csv[1],
+                malalties.get(Integer.parseInt(csv[2])));
+        if(csv.length > 3){
+            nodo = new Visita(Arrays.copyOfRange(csv, 3, csv.length), malalties);
         }
     }
 }

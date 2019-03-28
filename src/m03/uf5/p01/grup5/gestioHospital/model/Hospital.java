@@ -25,6 +25,12 @@ public class Hospital {
         malalties = new ArrayList<Malaltia>();
         adreca = new Adreca(tipo,carrer,numero,planta,porta,ciutat,codiPostal);
     }
+    public Hospital(Adreca adreca) {
+        pacients = new ArrayList<Pacient>();
+        metges = new ArrayList<Metge>();
+        malalties = new ArrayList<Malaltia>();
+        this.adreca = adreca;
+    }
     public void nouPacient(boolean casaObloque,String nom, String primerCognom, String segonCognom, String numSegSocial, String nif, String tel, String tipo,String carrer,int numero,int planta,String porta,String ciudad,int codiPostal) throws Exception {
         pacients.add(new Pacient(casaObloque,nom, primerCognom, segonCognom, numSegSocial, nif, tel, tipo,carrer,numero,planta,porta,ciudad,codiPostal, pacients.size()));
     }

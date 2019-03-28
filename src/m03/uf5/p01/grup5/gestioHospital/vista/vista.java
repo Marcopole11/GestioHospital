@@ -9,7 +9,7 @@ import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-
+import m03.uf5.p01.grup5.gestioHospital.controlador.*;
 /**
  *
  * @author Marc Cardenas, Roger Miralles y Raul Barrero.
@@ -18,9 +18,7 @@ public class vista {
     
     
     public static void main(String[] args){
-        gestorVentana menu = new gestorVentana();
-        menu.abrirVentana(Ventana.menuPrincipal);
-        System.out.println("He detectado el cierre");
+        Ventana.menuPrincipal.abrir(new ControlHospital());
         //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
     }
     

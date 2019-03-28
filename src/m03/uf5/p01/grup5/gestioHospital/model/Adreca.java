@@ -17,6 +17,15 @@ public class Adreca {
     int numero, planta, codiPostal;
         
     public Adreca(String tipo, String carrer,int numero, String ciudad, int codiPostal) {
+        create(tipo, carrer, numero, ciudad, codiPostal);
+    }
+
+    public Adreca(String tipo, String carrer,int numero, int planta, String porta, String ciudad, int codiPostal) {
+        create(tipo, carrer, numero, ciudad, codiPostal);
+        this.planta=planta;
+        this.porta=porta;
+    }
+    private void create(String tipo, String carrer,int numero, String ciudad, int codiPostal){
         switch(tipo){
             case "Avenida": case "avenida": case "avinguda": case "Avinguda":
                 this.tipo = "Av.";
@@ -26,30 +35,13 @@ public class Adreca {
                 break;
             case "Carretera": case "carretera":
                 this.tipo = "ca/";
+            default:
+                this.tipo = tipo;
         }
         this.carrer=carrer;
         this.numero=numero;
         this.planta=0;
         this.porta=null;
-        this.ciutat=ciudad;
-        this.codiPostal=codiPostal;
-    }
-
-    public Adreca(String tipo, String carrer,int numero, int planta, String porta, String ciudad, int codiPostal) {
-           switch(tipo){
-            case "Avenida": case "avenida": case "avinguda": case "Avinguda":
-                this.tipo = "Av.";
-                break;
-            case "Calle": case "calle": case "carrer": case "Carrer":
-                this.tipo = "c/";
-                break;
-            case "Carretera": case "carretera":
-                this.tipo = "ca/";
-        }
-        this.carrer=carrer;
-        this.numero=numero;
-        this.planta=planta;
-        this.porta=porta;
         this.ciutat=ciudad;
         this.codiPostal=codiPostal;
     }
@@ -63,6 +55,23 @@ public class Adreca {
             return tipo + " " + carrer + " nº " + numero + ", " + planta + " " + porta + ", " + ciutat + ", " + entero(codiPostal,5);
         } else {
             return tipo + " " + carrer + " nº " + numero + ", " + ciutat + ", " + entero(codiPostal,5);
+        }
+    }
+    public static String[] CSV(){
+        return new String[]{"tipo","carrer","numero","ciudad","codiPostal","planta","porta"};
+    }
+    public String toCSV(){
+        String base = tipo+";"+carrer+";"+numero+";"+ciutat+";"+entero(codiPostal,5);
+        if(porta != null)return base+";"+planta+";"+porta;
+        else return base;
+    }
+    public Adreca(String[] csv,int[] orden){
+        if(csv.length == 5){
+            create(csv[0], csv[1],Integer.parseInt(csv[2]), csv[3], Integer.parseInt(csv[4]));
+        } else {
+            create(csv[0], csv[1],Integer.parseInt(csv[2]), csv[3], Integer.parseInt(csv[4]));
+            this.planta=Integer.parseInt(csv[5]);
+            this.porta=csv[6];
         }
     }
     private String entero(int dato, int largo){

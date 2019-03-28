@@ -8,7 +8,7 @@ package m03.uf5.p01.grup5.gestioHospital.model;
 
 /**
  *
- * @author Marc Cardenas, Ra˙l Barrero, Roger Miralles
+ * @author Marc Cardenas, Raul Barrero, Roger Miralles
  */
 public abstract class Persona {
 
@@ -17,6 +17,24 @@ public abstract class Persona {
     boolean cOb;
 
     public Persona(boolean casaObloque,String nom, String primerCognom, String segonCognom, String numSegSocial, String nif, String tel, String tipo,String carrer,int numero,int planta,String porta,String ciudad,int codiPostal) throws Exception {
+        create(nom, primerCognom, segonCognom, numSegSocial, nif, tel);
+        this.cOb=casaObloque;
+        try{
+            if(cOb){// si es una casa es TRUE
+                this.adreca = new Adreca(tipo,carrer,numero,ciudad,codiPostal);
+            }else{// si es un bloque de pisos es FALSE
+                this.adreca = new Adreca(tipo,carrer,numero,planta,porta,ciudad,codiPostal);
+            }            
+        } catch (Exception e){
+            throw(new Exception("El formato de la direcciÛn no es correcto, asegurate de introducir tambiÈn ciudad y cÛdigo postal."));
+        }
+    }
+    public Persona(String nom, String primerCognom, String segonCognom, String numSegSocial, String nif, String tel, Adreca adreca) throws Exception {
+        create(nom, primerCognom, segonCognom, numSegSocial, nif, tel);
+        this.cOb=adreca.porta==null;
+        this.adreca = adreca;
+    }
+    private void create(String nom, String primerCognom, String segonCognom, String numSegSocial, String nif, String tel) throws Exception{
         if (nom.length() > 0 && primerCognom.length() > 0 && segonCognom.length() > 0) {
             if (esAlfanumerico(nom) || esAlfanumerico(primerCognom) || esAlfanumerico(segonCognom)) {
                 this.nom = nom;
@@ -31,18 +49,7 @@ public abstract class Persona {
         this.numSegSocial = checkNumSeg(numSegSocial); 
         this.nif = checkDNI(nif);
         checkTel(tel);
-        this.cOb=casaObloque;
-        try{
-            if(cOb){// si es una casa es TRUE
-                this.adreca = new Adreca(tipo,carrer,numero,ciudad,codiPostal);
-            }else{// si es un bloque de pisos es FALSE
-                this.adreca = new Adreca(tipo,carrer,numero,planta,porta,ciudad,codiPostal);
-            }            
-        } catch (Exception e){
-            throw(new Exception("El formato de la direcciÛn no es correcto, asegurate de introducir tambiÈn ciudad y cÛdigo postal."));
-        }
     }
-    
     private static boolean esAlfanumerico(String dato) {
         if (isNotAlfanumeric(dato)) {
             String otros = "·ÈÌÛ˙‡ËÚ¡…Õ”⁄¿»“Ô¸œ‹";

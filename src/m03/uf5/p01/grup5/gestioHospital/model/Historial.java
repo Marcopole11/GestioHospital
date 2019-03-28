@@ -5,6 +5,8 @@
  */
 package m03.uf5.p01.grup5.gestioHospital.model;
 
+import java.util.List;
+
 /**
  *
  * @author Marc Cardenas, Raúl Barrero, Roger Miralles
@@ -12,11 +14,15 @@ package m03.uf5.p01.grup5.gestioHospital.model;
 public class Historial {
 
     public int codi;
-
+    public Visita visites;
     public Historial(int iex) {
         codi = iex;
+        visites = new Visita();
     }
-    public Visita visites = new Visita();
+    public Historial(int iex, String[] csv, List<Malaltia> malalties) {
+        codi = iex;
+        visites = new Visita(csv, malalties);
+    }
     
     @Override
     public String toString() {

@@ -12,7 +12,7 @@ import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-
+import m03.uf5.p01.grup5.gestioHospital.controlador.*;
 /**
  *
  * @author Marc Cardenas, Raul Barrero, Roger Miralles
@@ -45,7 +45,7 @@ public class gestorVentana {
         }
         @Override
         public void run(){
-            JFrame ventana = tipo.abrir();
+            JFrame ventana = tipo.abrir(new ControlHospital());
             ventana.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent we) {
