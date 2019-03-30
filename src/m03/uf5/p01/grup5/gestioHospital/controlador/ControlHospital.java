@@ -190,14 +190,13 @@ public class ControlHospital {
     }
     // A PARTIR DE AQUI VAN LAS COMPROBACIONES
 
-    public int[] registrarVisita(String getdia, String getmes, String getany, String gethora, String getminuts) {
-        int[] inst = new int[5];
-        inst[0] = Integer.parseInt(getdia);
-        inst[1] = Integer.parseInt(getmes);
-        inst[2] = Integer.parseInt(getany);
-        inst[3] = margenIn(23,Integer.parseInt(gethora));
-        inst[4] = margenIn(59,Integer.parseInt(getminuts));
-        return inst;
+    public Visitando registrarVisita(String getdia, String getmes, String getany, String gethora, String getminuts) {
+        return new Visitando(
+            Integer.parseInt(getdia),
+            Integer.parseInt(getmes),
+            Integer.parseInt(getany),
+            margenIn(23,Integer.parseInt(gethora)),
+            margenIn(59,Integer.parseInt(getminuts)));
     }
       
     
