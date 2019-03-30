@@ -81,4 +81,27 @@ public class Adreca {
         }
         return mandar;
     }
+    public String getCiutat() {
+        return ciutat;
+    }
+
+    public long getCodiPostal() {
+        return codiPostal;
+    }
+
+    public String getCarrer() {
+        return carrer;
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public int getPlanta() {
+        return planta;
+    }
+
+    public String getPorta() {
+        return porta;
+    }
 }
