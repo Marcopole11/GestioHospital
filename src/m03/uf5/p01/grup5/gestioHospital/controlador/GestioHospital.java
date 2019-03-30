@@ -9,7 +9,7 @@ import m03.uf5.p01.grup5.gestioHospital.model.Hospital;
 import java.util.Scanner;
 import m03.uf5.p01.grup5.gestioHospital.model.Metge;
 import m03.uf5.p01.grup5.gestioHospital.vista.vista;
-
+ 
 /**
  *
  * @author Marc Cardenas, Raul Barrero, Roger Miralles

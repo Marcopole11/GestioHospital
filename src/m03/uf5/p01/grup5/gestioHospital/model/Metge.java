@@ -42,4 +42,15 @@ public class Metge extends Persona {
         this.salariMensual = Integer.parseInt(csv[8]);
         this.codiCompteCorrent = csv[9];
     }
+    public int getNumEmpleat() {
+        return numEmpleat;
+    }
+
+    public int getSalariMensual() {
+        return salariMensual;
+    }
+
+    public String getCodiCompteCorrent() {
+        return codiCompteCorrent;
+    }
 }

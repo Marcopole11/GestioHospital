@@ -38,4 +38,7 @@ public class Pacient extends Persona {
            historial = new Historial(iex, csv[7].split(","), malalties); 
         }
     }
+    public Historial getHistorial() {
+        return this.historial;
+    }
 }

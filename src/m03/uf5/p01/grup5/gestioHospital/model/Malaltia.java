@@ -50,4 +50,34 @@ public class Malaltia {
         this.tractament=csv[3];
         this.duradaTractament=Duration.ofDays(Long.parseLong(csv[4]));
     }    
+    
+    public int getCodi() {
+        return this.codi;
+    }
+    
+    public String getNom() {
+        return nom;
+    }
+    
+    public boolean isCausaBaixa() {
+        return causaBaixa;
+    }
+
+    public String isCausaBaixaString() {
+        if(this.isCausaBaixa()){
+            return "Si";
+        }else{
+            return "No";
+        }
+    }    
+    
+    public String getTractament() {
+        return tractament;
+    }
+
+   
+    public Duration getDuradaTractament() {
+        return duradaTractament;
+    }
+
 }
