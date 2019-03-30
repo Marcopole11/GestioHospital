@@ -184,4 +184,8 @@ public abstract class Persona {
     public Adreca getAdreca() {
         return adreca;
     }
+    
+    public Boolean getCasaOBloque(){
+        return cOb;
+    }
 }

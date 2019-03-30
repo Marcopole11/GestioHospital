@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import m03.uf5.p01.grup5.gestioHospital.controlador.GestioHospital;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
 import m03.uf5.p01.grup5.gestioHospital.model.Pacient;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
@@ -30,12 +31,12 @@ public class DAOPaciente {
             return null;
         }
     }
-    public static Pacient[] getPacients() {
+    public static Pacient[] getPacients() throws Exception{
         try {
             ArrayList<Pacient> llistaPacients = new ArrayList<>();
             ResultSet rs = getPacientsResultSet();
             while (rs.next()) {
-                llistaPacients.add(creaPAcientO(rs));
+                llistaPacients.add(creaPAcientO(rs,llistaPacients.size()-1));
             }
             Pacient[] aPacients = new Pacient[llistaPacients.size()];
             return llistaPacients.toArray(aPacients);
@@ -88,35 +89,37 @@ public static ResultSet pacientNSS(String nss) {
             return null;
         }
     }
-public static Pacient getPacientNif(String DNI) {
-        try {
-            ResultSet rs = pacientNifResult(DNI);
-            rs.next();
-            return creaPAcientO(rs);
-        } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
-        }
-    }
+////public static Pacient getPacientNif(String DNI) throws Exception {
+////        try {
+////            ResultSet rs = pacientNifResult(DNI);
+////            rs.next();
+////            return creaPAcientO(rs,);
+////        } catch (SQLException ex) {
+////            System.out.println("ERROR EN SQL: " + ex.getMessage());
+////            return null;
+////        }
+////    }
 
     public static boolean modificarPacient(Pacient pacient) {
         try {
             Connection join = ConexionDB.contectar();
             CallableStatement states = null;
-            String csql = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String csql = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             states = join.prepareCall(csql);
-            states.setString(1, pacient.getNif());
+            states.setBoolean(1,pacient.getCasaOBloque());
             states.setString(2, pacient.getNom());
             states.setString(3, pacient.getCognom1());
             states.setString(4, pacient.getCognom2());
             states.setString(5, pacient.getNumSegSocial());
-            states.setString(6, pacient.getTelefon());
-            states.setString(7, pacient.getAdreca().getCiutat());
-            states.setLong(8, pacient.getAdreca().getCodiPostal());
-            states.setString(9, pacient.getAdreca().getCarrer());
+            states.setString(6, pacient.getNif());
+            states.setString(7, pacient.getTelefon());
+            states.setString(8, pacient.getAdreca().getTipo());
+            states.setString(9, pacient.getAdreca().getCarrer());                        
             states.setInt(10, pacient.getAdreca().getNumero());
             states.setInt(11, pacient.getAdreca().getPlanta());
             states.setString(12, pacient.getAdreca().getPorta());
+            states.setString(13, pacient.getAdreca().getCiutat());
+            states.setLong(14, pacient.getAdreca().getCodiPostal());
             states.execute();
             return true;
         } catch (SQLException ex) {
@@ -124,7 +127,7 @@ public static Pacient getPacientNif(String DNI) {
             return false;
         }
     }
-    private static Pacient creaPAcientO(ResultSet rs) throws SQLException {
+    private static Pacient creaPAcientO(ResultSet rs,int numeroH) throws Exception {
         String nifPacient = rs.getString("nifPacient");
         int codiHistorial = rs.getInt("codiHistorial");
         String nomPacient = rs.getString("nomPacient");
@@ -133,15 +136,16 @@ public static Pacient getPacientNif(String DNI) {
         String numSegSoc = rs.getString("numSegSoc");
         String telefon = rs.getString("telefon");
         String ciutat = rs.getString("ciutat");
-        long codiPostal = rs.getLong("codiPostal");
+        int codiPostal = rs.getInt("codiPostal");
+        boolean casaObloque=rs.getBoolean("casaObloque");
+        String tipo=rs.getString("tipo");
         String carrer = rs.getString("carrer");
         int numero = rs.getInt("numero");
-        String planta = rs.getString("planta");
+        int planta = rs.getInt("planta");
         String porta = rs.getString("porta");
-
-        //Adreca adreca = new Adreca(,,numero,planta,porta,ciutat,codiPostal);
-        //return new Pacient(nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, adreca);
-        return null;
+        
+        return new Pacient(casaObloque,nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, tipo,carrer,numero,planta,porta,ciutat,codiPostal,numeroH);
+        
     }
     
     public static boolean creaPacient(Pacient pacient) throws SQLException {

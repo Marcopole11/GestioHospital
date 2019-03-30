@@ -89,6 +89,10 @@ public class Adreca {
         return codiPostal;
     }
 
+    public String getTipo(){
+        return tipo;
+    }
+    
     public String getCarrer() {
         return carrer;
     }
