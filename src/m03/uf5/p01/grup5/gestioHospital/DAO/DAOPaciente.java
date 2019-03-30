@@ -139,8 +139,9 @@ public static Pacient getPacientByNif(String DNI) {
         String planta = rs.getString("planta");
         String porta = rs.getString("porta");
 
-        Adreca adreca = new Adreca(ciutat, codiPostal, carrer, numero, planta, porta);
-        return new Pacient(nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, adreca);
+        //Adreca adreca = new Adreca(ciutat, codiPostal, carrer, numero, planta, porta);
+        //return new Pacient(nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, adreca);
+        return null;
     }
     
     public static boolean createPaciente(Pacient pacient) throws SQLException {

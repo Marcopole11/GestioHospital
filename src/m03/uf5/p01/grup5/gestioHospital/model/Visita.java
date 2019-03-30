@@ -100,4 +100,12 @@ public class Visita {
             nodo = new Visita(Arrays.copyOfRange(csv, 3, csv.length), malalties);
         }
     }
+    public LocalDateTime getData() {
+        return data;
+    }
+
+    public String getMetge() {
+        return metge;
+    }
+
 }

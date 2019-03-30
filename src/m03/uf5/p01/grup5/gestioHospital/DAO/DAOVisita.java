@@ -62,9 +62,9 @@ public static ResultSet getVisitaCodiHistorialResultSet(int codiHistorial) {
                     + " VALUES (?,?,?,?)";
             states = join.prepareStatement(consulta);
             states.setString(1, visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")));
-            states.setInt(2, visita.getMalaltia().getCodi());
-            states.setString(3, visita.getMetge().getNif());
-            states.setString(4, visita.getDni());
+           // states.setInt(2, visita.getMalaltia().getCodi());
+           // states.setString(3, visita.getMetge().getNif());
+           // states.setString(4, visita.getDni());
             states.executeUpdate();
             return true;
 
