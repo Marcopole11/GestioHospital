@@ -18,10 +18,10 @@ import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 public class DAOVisita {
     public static ResultSet getVisitaResultSet() {
         try {
-            Connection conn = ConexionDB.contectar();
-            PreparedStatement sentencia = conn.prepareStatement("SELECT * FROM VISITES ORDER BY fecha DESC;");
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES ORDER BY fecha DESC;");
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -30,11 +30,11 @@ public class DAOVisita {
 
     public static ResultSet getVisitaDNIRS(String dni) {
         try {
-            Connection conn = ConexionDB.contectar();
-            PreparedStatement sentencia = conn.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = ?;");
-            sentencia.setString(1, dni);
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = ?;");
+            states.setString(1, dni);
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -42,11 +42,11 @@ public class DAOVisita {
     }
 public static ResultSet getVisitaCodiHistorialResultSet(int codiHistorial) {
         try {
-            Connection conn = ConexionDB.contectar();
-            PreparedStatement sentencia = conn.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = (SELECT codiHistorial FROM PACIENTS WHERE codiHistorial = ?);");
-            sentencia.setInt(1, codiHistorial);
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = (SELECT codiHistorial FROM PACIENTS WHERE codiHistorial = ?);");
+            states.setInt(1, codiHistorial);
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -55,17 +55,17 @@ public static ResultSet getVisitaCodiHistorialResultSet(int codiHistorial) {
 
     public static boolean createVisita(Visita visita) throws SQLException {
         try {
-            Connection con = ConexionDB.contectar();
-            PreparedStatement sentencia = null;
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = null;
             String consulta = "INSERT INTO VISITES"
                     + " (fecha, codiMalaltia, dniMetge, dniPacient)"
                     + " VALUES (?,?,?,?)";
-            sentencia = con.prepareStatement(consulta);
-            sentencia.setString(1, visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")));
-            sentencia.setInt(2, visita.getMalaltia().getCodi());
-            sentencia.setString(3, visita.getMetge().getNif());
-            sentencia.setString(4, visita.getDni());
-            sentencia.executeUpdate();
+            states = join.prepareStatement(consulta);
+            states.setString(1, visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")));
+            states.setInt(2, visita.getMalaltia().getCodi());
+            states.setString(3, visita.getMetge().getNif());
+            states.setString(4, visita.getDni());
+            states.executeUpdate();
             return true;
 
         } catch (NullPointerException ex) {
