@@ -93,5 +93,12 @@ public class Hospital {
         }
         return null;
     }
+//    public Hospital getInstance() {
+//        return this.Hospital;
+//    }
+//
+//    public String getName() {
+//        return this.nomHospital;
+//    }
 }
 

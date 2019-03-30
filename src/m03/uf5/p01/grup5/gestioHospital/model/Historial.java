@@ -28,4 +28,7 @@ public class Historial {
     public String toString() {
         return "Historial de visites:\n" + visites.toString();
     }
+    public int getCodi () {
+        return this.codi;
+    }
 }
