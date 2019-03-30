@@ -37,81 +37,81 @@ public class DAOPaciente {
             return null;
         }
     }
-    public static Pacient[] getAllPacients() {
+    public static Pacient[] getPacients() {
         try {
-            ArrayList<Pacient> listPacients = new ArrayList<>();
+            ArrayList<Pacient> llistaPacients = new ArrayList<>();
             ResultSet rs = getPacientsResultSet();
             while (rs.next()) {
-                listPacients.add(createPacientObj(rs));
+                llistaPacients.add(creaPAcientO(rs));
             }
-            Pacient[] arrayPacients = new Pacient[listPacients.size()];
-            return listPacients.toArray(arrayPacients);
+            Pacient[] aPacients = new Pacient[llistaPacients.size()];
+            return llistaPacients.toArray(aPacients);
 
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
-public static ResultSet pacienteByNifRS(String nif) {
+public static ResultSet pacientNifResult(String nif) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String consulta = "SELECT * FROM PACIENTS WHERE nifPacient = ?";
-            states = join.prepareStatement(consulta);
+            String csql = "SELECT * FROM PACIENTS WHERE nifPacient = ?";
+            states = join.prepareStatement(csql);
             states.setString(1, nif);
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
-public static ResultSet pacienteByNSS(String nss) {
+public static ResultSet pacientNSS(String nss) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String consulta = "SELECT * FROM PACIENTS WHERE numSegSoc = ?";
-            states = join.prepareStatement(consulta);
+            String csql = "SELECT * FROM PACIENTS WHERE numSegSoc = ?";
+            states = join.prepareStatement(csql);
             states.setString(1, nss);
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
 
-    public static ResultSet pacienteByCodiHistorial(int codiHist) {
+    public static ResultSet pacientIEX(int codiHist) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String consulta = "SELECT * FROM PACIENTS WHERE codiHistorial = ?";
-            states = join.prepareStatement(consulta);
+            String csql = "SELECT * FROM PACIENTS WHERE codiHistorial = ?";
+            states = join.prepareStatement(csql);
             states.setInt(1, codiHist);
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
-public static Pacient getPacientByNif(String DNI) {
+public static Pacient getPacientNif(String DNI) {
         try {
-            ResultSet rs = pacienteByNifRS(DNI);
+            ResultSet rs = pacientNifResult(DNI);
             rs.next();
-            return createPacientObj(rs);
+            return creaPAcientO(rs);
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
 
-    public static boolean modificaPacient(Pacient pacient) {
+    public static boolean modificarPacient(Pacient pacient) {
         try {
             Connection join = ConexionDB.contectar();
             CallableStatement states = null;
-            String consulta = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?)}";
-            states = join.prepareCall(consulta);
+            String csql = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            states = join.prepareCall(csql);
             states.setString(1, pacient.getNif());
             states.setString(2, pacient.getNom());
             states.setString(3, pacient.getCognom1());
@@ -127,11 +127,11 @@ public static Pacient getPacientByNif(String DNI) {
             states.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return false;
         }
     }
-    private static Pacient createPacientObj(ResultSet rs) throws SQLException {
+    private static Pacient creaPAcientO(ResultSet rs) throws SQLException {
         String nifPacient = rs.getString("nifPacient");
         int codiHistorial = rs.getInt("codiHistorial");
         String nomPacient = rs.getString("nomPacient");
@@ -146,12 +146,12 @@ public static Pacient getPacientByNif(String DNI) {
         String planta = rs.getString("planta");
         String porta = rs.getString("porta");
 
-        //Adreca adreca = new Adreca(ciutat, codiPostal, carrer, numero, planta, porta);
+        //Adreca adreca = new Adreca(,,numero,planta,porta,ciutat,codiPostal);
         //return new Pacient(nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, adreca);
         return null;
     }
     
-    public static boolean createPaciente(Pacient pacient) throws SQLException {
+    public static boolean creaPacient(Pacient pacient) throws SQLException {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
         String consulta = "INSERT INTO PACIENTS (nifPacient, codiHistorial, numSegSoc, nomPacient, cognom1Pacient, cognom2Pacient, telefon, ciutat, codiPostal, carrer, numero, planta, porta)"
