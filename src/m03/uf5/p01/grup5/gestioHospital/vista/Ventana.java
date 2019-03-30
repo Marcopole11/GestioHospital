@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import m03.uf5.p01.grup5.gestioHospital.controlador.*;
-
+import m03.uf5.p01.grup5.gestioHospital.model.Visitando;
 /**
  *
  * @author Marc Cardenas, Raul Barrero, Roger Miralles
@@ -33,6 +33,7 @@ public class Ventana {
     byte tipo;
     int totalW, totalH;
     private GraphicsConfiguration gc;
+    public Visitando tempVData;
     public static Ventana menuPrincipal = new Ventana((byte) 1);
     public static Ventana menuAnadir = new Ventana((byte) 2);
     public static Ventana menuMostrar = new Ventana((byte) 3);
@@ -66,8 +67,11 @@ public class Ventana {
     private Ventana(byte tipo) {
         this.tipo = tipo;
     }
-
     public JFrame abrir(ControlHospital saved) {
+        return abrir(saved, null);
+    }
+    public JFrame abrir(ControlHospital saved, Visitando tempVisita) {
+        this.tempVData = tempVisita;
         this.saved = saved;
         JFrame ventana;
         ventana = new JFrame(gc);
@@ -362,13 +366,13 @@ public class Ventana {
                             minuts = "0" + minuts;
                         }
                         try {
-                            int[] tiempo = saved.registrarVisita(dia, mes, any, hora, minuts);
-                            String mesg = tiempo[0] + "/" + tiempo[1] + "/" + tiempo[2] + " a les " + tiempo[3] + ":";
-                            if (tiempo[4] < 10) {
+                            Visitando tempVisit = saved.registrarVisita(dia, mes, any, hora, minuts);
+                            String mesg = tempVisit.tiempo(0) + "/" + tempVisit.tiempo(1) + "/" + tempVisit.tiempo(2) + " a les " + tempVisit.tiempo(3) + ":";
+                            if (tempVisit.tiempo(4) < 10) {
                                 mesg += "0";
                             }
-                            JOptionPane.showMessageDialog(null, "Visita realitzada el " + mesg + tiempo[4] + ". Continua per identificar el pacient");
-                            Ventana.idPacient.abrir(saved);
+                            JOptionPane.showMessageDialog(null, "Visita realitzada el " + mesg + tempVisit.tiempo(4) + ". Continua per identificar el pacient");
+                            Ventana.idPacient.abrir(saved,tempVisit);
                             ventana.dispose();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, "No se ha podido registrar la visita\n" + e.getMessage());
@@ -409,7 +413,7 @@ public class Ventana {
         btnNIF.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idNIFPacient.abrir(saved);
+                Ventana.idNIFPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -417,7 +421,7 @@ public class Ventana {
         btnNSS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idNSSPacient.abrir(saved);
+                Ventana.idNSSPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -425,7 +429,7 @@ public class Ventana {
         btnHistorial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idHistorialPacient.abrir(saved);
+                Ventana.idHistorialPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -487,8 +491,8 @@ public class Ventana {
                         JOptionPane.showMessageDialog(null, "Algun campo no es alfanumerico. Arreglalo y vuelve a probar");
                     } else {
                         try {
-                            saved.comprobarDniPacient(nif);
-                            Ventana.idMetge.abrir(saved);
+                            tempVData.pacient = saved.comprobarDniPacient(nif);
+                            Ventana.idMetge.abrir(saved,tempVData);
                             ventana.dispose();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -523,8 +527,8 @@ public class Ventana {
 
                     try {
                         JOptionPane.showMessageDialog(null, "El numeros de la segureta social es " + nss + ".");
-                        saved.comprobarNSSPacient(nss);
-                        Ventana.idMetge.abrir(saved);
+                        tempVData.pacient = saved.comprobarNSSPacient(nss);
+                        Ventana.idMetge.abrir(saved,tempVData);
                         ventana.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
@@ -558,7 +562,8 @@ public class Ventana {
                     try {
                         JOptionPane.showMessageDialog(null, "El codi de historial es " + codi + ".");
                         saved.comprobarCodiPacient(codi);
-                        Ventana.idMetge.abrir(saved);
+                        tempVData.pacient = Integer.parseInt(codi);
+                        Ventana.idMetge.abrir(saved,tempVData);
                         ventana.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());

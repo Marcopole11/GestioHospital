@@ -190,14 +190,13 @@ public class ControlHospital {
     }
     // A PARTIR DE AQUI VAN LAS COMPROBACIONES
 
-    public int[] registrarVisita(String getdia, String getmes, String getany, String gethora, String getminuts) {
-        int[] inst = new int[5];
-        inst[0] = Integer.parseInt(getdia);
-        inst[1] = Integer.parseInt(getmes);
-        inst[2] = Integer.parseInt(getany);
-        inst[3] = margenIn(23,Integer.parseInt(gethora));
-        inst[4] = margenIn(59,Integer.parseInt(getminuts));
-        return inst;
+    public Visitando registrarVisita(String getdia, String getmes, String getany, String gethora, String getminuts) {
+        return new Visitando(
+            Integer.parseInt(getdia),
+            Integer.parseInt(getmes),
+            Integer.parseInt(getany),
+            margenIn(23,Integer.parseInt(gethora)),
+            margenIn(59,Integer.parseInt(getminuts)));
     }
       
     
@@ -237,24 +236,22 @@ public class ControlHospital {
         elObjeto.novaMalatia(nom, tractament, causaBaixa, duradaTractament);
     }
     
-    public void comprobarDniPacient(String tempnif) throws Exception {
-        if (elObjeto.pacient(tempnif) != null) {
-
+    public int comprobarDniPacient(String tempnif) throws Exception {
+        Pacient retorno = elObjeto.pacient(tempnif);
+        if (retorno != null) {
+            return retorno.historial.codi;
         } else {
             throw (new Exception("Este dni no corresponde a ningun pacient, introduce otro. "));
         }
-        //int codhis = 0;
-       int codhis = elObjeto.pacient(tempnif).historial.codi;
     }
 
-    public void comprobarNSSPacient(String segsoc) throws Exception {
-        if (elObjeto.pacientSegSoc(segsoc) != null) {
-
+    public int comprobarNSSPacient(String segsoc) throws Exception {
+        Pacient retorno = elObjeto.pacientSegSoc(segsoc);
+        if (retorno != null) {
+            return retorno.historial.codi;
         } else {
             throw (new Exception("Este numeros de la seguridad social no corresponde a ningun pacient, introduce otro. "));
         }
-        int codhis = 0;
-        codhis = elObjeto.pacientSegSoc(segsoc).historial.codi;
     }
 
     public void comprobarCodiPacient(String codi) throws Exception {

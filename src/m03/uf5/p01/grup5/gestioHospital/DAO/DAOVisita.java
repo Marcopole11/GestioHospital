@@ -13,7 +13,7 @@ import m03.uf5.p01.grup5.gestioHospital.model.Visita;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 /**
  *
- * @author raulk
+ * @author raulk, Roger, Marco
  */
 public class DAOVisita {
     public static ResultSet getVisitaResultSet() {
