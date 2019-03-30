@@ -134,8 +134,7 @@ public class DAOPaciente {
     }
 
     private static Pacient creaPAcientO(ResultSet rs, int numeroH) throws Exception {
-        String nifPacient = rs.getString("nifPacient");
-        int codiHistorial = rs.getInt("codiHistorial");
+        String nifPacient = rs.getString("nifPacient");        
         String nomPacient = rs.getString("nomPacient");
         String cognom1Pacient = rs.getString("cognom1Pacient");
         String cognom2Pacient = rs.getString("cognom2Pacient");
