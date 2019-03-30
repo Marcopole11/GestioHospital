@@ -19,24 +19,27 @@ import m03.uf5.p01.grup5.gestioHospital.controlador.GestioHospital;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
 import m03.uf5.p01.grup5.gestioHospital.model.Pacient;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
+
 public class DAOPaciente {
-    public static ResultSet getPacientsResultSet(){
+
+    public static ResultSet getPacientsResultSet() {
         try {
             Connection join = ConexionDB.contectar();
-            PreparedStatement states=join.prepareStatement("SELECT * FROM PACIENTS;");
+            PreparedStatement states = join.prepareStatement("SELECT * FROM PACIENTS;");
             states.executeQuery();
             return states.getResultSet();
         } catch (Exception e) {
-            System.out.println("ERROR EN SQL:"+e.getMessage());
+            System.out.println("ERROR EN SQL:" + e.getMessage());
             return null;
         }
     }
-    public static Pacient[] getPacients() throws Exception{
+
+    public static Pacient[] getPacients() throws Exception {
         try {
             ArrayList<Pacient> llistaPacients = new ArrayList<>();
             ResultSet rs = getPacientsResultSet();
             while (rs.next()) {
-                llistaPacients.add(creaPAcientO(rs,llistaPacients.size()-1));
+                llistaPacients.add(creaPAcientO(rs, llistaPacients.size() - 1));
             }
             Pacient[] aPacients = new Pacient[llistaPacients.size()];
             return llistaPacients.toArray(aPacients);
@@ -46,7 +49,8 @@ public class DAOPaciente {
             return null;
         }
     }
-public static ResultSet pacientNifResult(String nif) {
+
+    public static ResultSet pacientNifResult(String nif) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -60,7 +64,8 @@ public static ResultSet pacientNifResult(String nif) {
             return null;
         }
     }
-public static ResultSet pacientNSS(String nss) {
+
+    public static ResultSet pacientNSS(String nss) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -106,7 +111,7 @@ public static ResultSet pacientNSS(String nss) {
             CallableStatement states = null;
             String csql = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             states = join.prepareCall(csql);
-            states.setBoolean(1,pacient.getCasaOBloque());
+            states.setBoolean(1, pacient.getCasaOBloque());
             states.setString(2, pacient.getNom());
             states.setString(3, pacient.getCognom1());
             states.setString(4, pacient.getCognom2());
@@ -114,7 +119,7 @@ public static ResultSet pacientNSS(String nss) {
             states.setString(6, pacient.getNif());
             states.setString(7, pacient.getTelefon());
             states.setString(8, pacient.getAdreca().getTipo());
-            states.setString(9, pacient.getAdreca().getCarrer());                        
+            states.setString(9, pacient.getAdreca().getCarrer());
             states.setInt(10, pacient.getAdreca().getNumero());
             states.setInt(11, pacient.getAdreca().getPlanta());
             states.setString(12, pacient.getAdreca().getPorta());
@@ -127,7 +132,8 @@ public static ResultSet pacientNSS(String nss) {
             return false;
         }
     }
-    private static Pacient creaPAcientO(ResultSet rs,int numeroH) throws Exception {
+
+    private static Pacient creaPAcientO(ResultSet rs, int numeroH) throws Exception {
         String nifPacient = rs.getString("nifPacient");
         int codiHistorial = rs.getInt("codiHistorial");
         String nomPacient = rs.getString("nomPacient");
@@ -137,17 +143,17 @@ public static ResultSet pacientNSS(String nss) {
         String telefon = rs.getString("telefon");
         String ciutat = rs.getString("ciutat");
         int codiPostal = rs.getInt("codiPostal");
-        boolean casaObloque=rs.getBoolean("casaObloque");
-        String tipo=rs.getString("tipo");
+        boolean casaObloque = rs.getBoolean("casaObloque");
+        String tipo = rs.getString("tipo");
         String carrer = rs.getString("carrer");
         int numero = rs.getInt("numero");
         int planta = rs.getInt("planta");
         String porta = rs.getString("porta");
-        
-        return new Pacient(casaObloque,nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, tipo,carrer,numero,planta,porta,ciutat,codiPostal,numeroH);
-        
+
+        return new Pacient(casaObloque, nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, tipo, carrer, numero, planta, porta, ciutat, codiPostal, numeroH);
+
     }
-    
+
     public static boolean creaPacient(Pacient pacient) throws SQLException {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
@@ -155,21 +161,22 @@ public static ResultSet pacientNSS(String nss) {
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
-        states.setString(1, pacient.getNif());
-        states.setInt(2, pacient.getHistorial().getCodi());
-        states.setString(3, pacient.getNumSegSocial());
-        states.setString(4, pacient.getNom());
-        states.setString(5, pacient.getCognom1());
-        states.setString(6, pacient.getCognom2());
+        states.setBoolean(1, pacient.getCasaOBloque());
+        states.setString(2, pacient.getNom());
+        states.setString(3, pacient.getCognom1());
+        states.setString(4, pacient.getCognom2());
+        states.setString(5, pacient.getNumSegSocial());
+        states.setString(6, pacient.getNif());
         states.setString(7, pacient.getTelefon());
-        states.setString(8, pacient.getAdreca().getCiutat());
-        states.setLong(9, pacient.getAdreca().getCodiPostal());
-        states.setString(10, pacient.getAdreca().getCarrer());
-        states.setInt(11, pacient.getAdreca().getNumero());
-        states.setInt(12, pacient.getAdreca().getPlanta());
-        states.setString(13, pacient.getAdreca().getPorta());
+        states.setString(8, pacient.getAdreca().getTipo());
+        states.setString(9, pacient.getAdreca().getCarrer());
+        states.setInt(10, pacient.getAdreca().getNumero());
+        states.setInt(11, pacient.getAdreca().getPlanta());
+        states.setString(12, pacient.getAdreca().getPorta());
+        states.setString(13, pacient.getAdreca().getCiutat());
+        states.setLong(14, pacient.getAdreca().getCodiPostal());
         states.executeUpdate();
         return true;
     }
-    
+
 }
