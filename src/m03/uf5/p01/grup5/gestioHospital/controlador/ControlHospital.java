@@ -236,24 +236,22 @@ public class ControlHospital {
         elObjeto.novaMalatia(nom, tractament, causaBaixa, duradaTractament);
     }
     
-    public void comprobarDniPacient(String tempnif) throws Exception {
-        if (elObjeto.pacient(tempnif) != null) {
-
+    public int comprobarDniPacient(String tempnif) throws Exception {
+        Pacient retorno = elObjeto.pacient(tempnif);
+        if (retorno != null) {
+            return retorno.historial.codi;
         } else {
             throw (new Exception("Este dni no corresponde a ningun pacient, introduce otro. "));
         }
-        //int codhis = 0;
-       int codhis = elObjeto.pacient(tempnif).historial.codi;
     }
 
-    public void comprobarNSSPacient(String segsoc) throws Exception {
-        if (elObjeto.pacientSegSoc(segsoc) != null) {
-
+    public int comprobarNSSPacient(String segsoc) throws Exception {
+        Pacient retorno = elObjeto.pacientSegSoc(segsoc);
+        if (retorno != null) {
+            return retorno.historial.codi;
         } else {
             throw (new Exception("Este numeros de la seguridad social no corresponde a ningun pacient, introduce otro. "));
         }
-        int codhis = 0;
-        codhis = elObjeto.pacientSegSoc(segsoc).historial.codi;
     }
 
     public void comprobarCodiPacient(String codi) throws Exception {

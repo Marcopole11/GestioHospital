@@ -413,7 +413,7 @@ public class Ventana {
         btnNIF.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idNIFPacient.abrir(saved);
+                Ventana.idNIFPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -421,7 +421,7 @@ public class Ventana {
         btnNSS.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idNSSPacient.abrir(saved);
+                Ventana.idNSSPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -429,7 +429,7 @@ public class Ventana {
         btnHistorial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idHistorialPacient.abrir(saved);
+                Ventana.idHistorialPacient.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -491,8 +491,8 @@ public class Ventana {
                         JOptionPane.showMessageDialog(null, "Algun campo no es alfanumerico. Arreglalo y vuelve a probar");
                     } else {
                         try {
-                            saved.comprobarDniPacient(nif);
-                            Ventana.idMetge.abrir(saved);
+                            tempVData.pacient = saved.comprobarDniPacient(nif);
+                            Ventana.idMetge.abrir(saved,tempVData);
                             ventana.dispose();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -527,8 +527,8 @@ public class Ventana {
 
                     try {
                         JOptionPane.showMessageDialog(null, "El numeros de la segureta social es " + nss + ".");
-                        saved.comprobarNSSPacient(nss);
-                        Ventana.idMetge.abrir(saved);
+                        tempVData.pacient = saved.comprobarNSSPacient(nss);
+                        Ventana.idMetge.abrir(saved,tempVData);
                         ventana.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
@@ -562,7 +562,8 @@ public class Ventana {
                     try {
                         JOptionPane.showMessageDialog(null, "El codi de historial es " + codi + ".");
                         saved.comprobarCodiPacient(codi);
-                        Ventana.idMetge.abrir(saved);
+                        tempVData.pacient = Integer.parseInt(codi);
+                        Ventana.idMetge.abrir(saved,tempVData);
                         ventana.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());

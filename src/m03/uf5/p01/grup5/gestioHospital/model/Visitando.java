@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
  */
 public class Visitando {
     private int dia, mes, any, hores, minuts;
-    
+    public int pacient;
     public Metge metge;
-    public Pacient pacient;
     public Malaltia diagnostic;
     public Visitando(int dia, int mes, int any, int hora, int minuts){
         this.dia = dia;
