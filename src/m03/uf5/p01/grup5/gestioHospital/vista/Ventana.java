@@ -33,7 +33,7 @@ public class Ventana {
     byte tipo;
     int totalW, totalH;
     private GraphicsConfiguration gc;
-    public Visitando tempVData = null;
+    public Visitando tempVData;
     public static Ventana menuPrincipal = new Ventana((byte) 1);
     public static Ventana menuAnadir = new Ventana((byte) 2);
     public static Ventana menuMostrar = new Ventana((byte) 3);
@@ -67,10 +67,11 @@ public class Ventana {
     private Ventana(byte tipo) {
         this.tipo = tipo;
     }
-    public JFrame abrir(ControlHospital saved, Visitando tempVisita) {
-        
-    }
     public JFrame abrir(ControlHospital saved) {
+        return abrir(saved, null);
+    }
+    public JFrame abrir(ControlHospital saved, Visitando tempVisita) {
+        this.tempVData = tempVisita;
         this.saved = saved;
         JFrame ventana;
         ventana = new JFrame(gc);
