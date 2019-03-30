@@ -21,8 +21,8 @@ import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 public class DAOPaciente {
     public static ResultSet getPacientsResultSet(){
         try {
-            Connection conexio = ConexionDB.contectar();
-            PreparedStatement states=conexio.prepareStatement("SELECT * FROM PACIENTS;");
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states=join.prepareStatement("SELECT * FROM PACIENTS;");
             states.executeQuery();
             return states.getResultSet();
         } catch (Exception e) {
