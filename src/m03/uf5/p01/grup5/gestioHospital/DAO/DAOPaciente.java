@@ -157,7 +157,7 @@ public class DAOPaciente {
     public static boolean creaPacient(Pacient pacient) throws SQLException {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
-        String consulta = "INSERT INTO PACIENTS (nifPacient, codiHistorial, numSegSoc, nomPacient, cognom1Pacient, cognom2Pacient, telefon, ciutat, codiPostal, carrer, numero, planta, porta)"
+        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, portaciutat, codiPostal,codiHistorial)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
