@@ -9,9 +9,9 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConexionDB {
-    public static String url = "jdbc:mysql://127.0.0.1:3306/bddeprueba",
+    public static String url = "jdbc:mysql://127.0.0.1:3307/hospital?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC ",
             usuario = "root",
-            pass = "maduro",
+            pass = "123456",
             clase = "com.mysql.jdbc.Driver";
     
     public static Connection contectar(){
