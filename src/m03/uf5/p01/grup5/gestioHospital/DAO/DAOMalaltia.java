@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import m03.uf5.p01.grup5.gestioHospital.model.Malaltia;
+import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
 public class DAOMalaltia {
 
