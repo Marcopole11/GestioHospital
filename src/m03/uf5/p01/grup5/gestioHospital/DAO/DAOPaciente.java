@@ -22,9 +22,9 @@ public class DAOPaciente {
     public static ResultSet getPacientsResultSet(){
         try {
             Connection conexio = ConexionDB.contectar();
-            PreparedStatement preparedStatement=conexio.prepareStatement("SELECT * FROM PACIENTS;");
-            preparedStatement.executeQuery();
-            return preparedStatement.getResultSet();
+            PreparedStatement states=conexio.prepareStatement("SELECT * FROM PACIENTS;");
+            states.executeQuery();
+            return states.getResultSet();
         } catch (Exception e) {
             System.out.println("ERROR EN SQL:"+e.getMessage());
             return null;
@@ -47,13 +47,13 @@ public class DAOPaciente {
     }
 public static ResultSet pacienteByNifRS(String nif) {
         try {
-            Connection con = ConexionDB.contectar();
-            PreparedStatement sentencia = null;
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = null;
             String consulta = "SELECT * FROM PACIENTS WHERE nifPacient = ?";
-            sentencia = con.prepareStatement(consulta);
-            sentencia.setString(1, nif);
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            states = join.prepareStatement(consulta);
+            states.setString(1, nif);
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -61,13 +61,13 @@ public static ResultSet pacienteByNifRS(String nif) {
     }
 public static ResultSet pacienteByNSS(String nss) {
         try {
-            Connection con = ConexionDB.contectar();
-            PreparedStatement sentencia = null;
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = null;
             String consulta = "SELECT * FROM PACIENTS WHERE numSegSoc = ?";
-            sentencia = con.prepareStatement(consulta);
-            sentencia.setString(1, nss);
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            states = join.prepareStatement(consulta);
+            states.setString(1, nss);
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -76,13 +76,13 @@ public static ResultSet pacienteByNSS(String nss) {
 
     public static ResultSet pacienteByCodiHistorial(int codiHist) {
         try {
-            Connection con = ConexionDB.contectar();
-            PreparedStatement sentencia = null;
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = null;
             String consulta = "SELECT * FROM PACIENTS WHERE codiHistorial = ?";
-            sentencia = con.prepareStatement(consulta);
-            sentencia.setInt(1, codiHist);
-            sentencia.executeQuery();
-            return sentencia.getResultSet();
+            states = join.prepareStatement(consulta);
+            states.setInt(1, codiHist);
+            states.executeQuery();
+            return states.getResultSet();
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
             return null;
@@ -101,23 +101,23 @@ public static Pacient getPacientByNif(String DNI) {
 
     public static boolean modificaPacient(Pacient pacient) {
         try {
-            Connection con = ConexionDB.contectar();
-            CallableStatement sentencia = null;
+            Connection join = ConexionDB.contectar();
+            CallableStatement states = null;
             String consulta = "{call actualizaPacient(?,?,?,?,?,?,?,?,?,?,?,?)}";
-            sentencia = con.prepareCall(consulta);
-            sentencia.setString(1, pacient.getNif());
-            sentencia.setString(2, pacient.getNom());
-            sentencia.setString(3, pacient.getCognom1());
-            sentencia.setString(4, pacient.getCognom2());
-            sentencia.setString(5, pacient.getNumSegSocial());
-            sentencia.setString(6, pacient.getTelefon());
-            sentencia.setString(7, pacient.getAdreca().getCiutat());
-            sentencia.setLong(8, pacient.getAdreca().getCodiPostal());
-            sentencia.setString(9, pacient.getAdreca().getCarrer());
-            sentencia.setInt(10, pacient.getAdreca().getNumero());
-            sentencia.setInt(11, pacient.getAdreca().getPlanta());
-            sentencia.setString(12, pacient.getAdreca().getPorta());
-            sentencia.execute();
+            states = join.prepareCall(consulta);
+            states.setString(1, pacient.getNif());
+            states.setString(2, pacient.getNom());
+            states.setString(3, pacient.getCognom1());
+            states.setString(4, pacient.getCognom2());
+            states.setString(5, pacient.getNumSegSocial());
+            states.setString(6, pacient.getTelefon());
+            states.setString(7, pacient.getAdreca().getCiutat());
+            states.setLong(8, pacient.getAdreca().getCodiPostal());
+            states.setString(9, pacient.getAdreca().getCarrer());
+            states.setInt(10, pacient.getAdreca().getNumero());
+            states.setInt(11, pacient.getAdreca().getPlanta());
+            states.setString(12, pacient.getAdreca().getPorta());
+            states.execute();
             return true;
         } catch (SQLException ex) {
             System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
@@ -144,26 +144,26 @@ public static Pacient getPacientByNif(String DNI) {
     }
     
     public static boolean createPaciente(Pacient pacient) throws SQLException {
-        Connection con = ConexionDB.contectar();
-        PreparedStatement sentencia = null;
+        Connection join = ConexionDB.contectar();
+        PreparedStatement states = null;
         String consulta = "INSERT INTO PACIENTS (nifPacient, codiHistorial, numSegSoc, nomPacient, cognom1Pacient, cognom2Pacient, telefon, ciutat, codiPostal, carrer, numero, planta, porta)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        sentencia = con.prepareStatement(consulta);
-        sentencia.setString(1, pacient.getNif());
-        sentencia.setInt(2, pacient.getHistorial().getCodi());
-        sentencia.setString(3, pacient.getNumSegSocial());
-        sentencia.setString(4, pacient.getNom());
-        sentencia.setString(5, pacient.getCognom1());
-        sentencia.setString(6, pacient.getCognom2());
-        sentencia.setString(7, pacient.getTelefon());
-        sentencia.setString(8, pacient.getAdreca().getCiutat());
-        sentencia.setLong(9, pacient.getAdreca().getCodiPostal());
-        sentencia.setString(10, pacient.getAdreca().getCarrer());
-        sentencia.setInt(11, pacient.getAdreca().getNumero());
-        sentencia.setInt(12, pacient.getAdreca().getPlanta());
-        sentencia.setString(13, pacient.getAdreca().getPorta());
-        sentencia.executeUpdate();
+        states = join.prepareStatement(consulta);
+        states.setString(1, pacient.getNif());
+        states.setInt(2, pacient.getHistorial().getCodi());
+        states.setString(3, pacient.getNumSegSocial());
+        states.setString(4, pacient.getNom());
+        states.setString(5, pacient.getCognom1());
+        states.setString(6, pacient.getCognom2());
+        states.setString(7, pacient.getTelefon());
+        states.setString(8, pacient.getAdreca().getCiutat());
+        states.setLong(9, pacient.getAdreca().getCodiPostal());
+        states.setString(10, pacient.getAdreca().getCarrer());
+        states.setInt(11, pacient.getAdreca().getNumero());
+        states.setInt(12, pacient.getAdreca().getPlanta());
+        states.setString(13, pacient.getAdreca().getPorta());
+        states.executeUpdate();
         return true;
     }
     
