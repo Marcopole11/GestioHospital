@@ -23,12 +23,12 @@ public class DAOVisita {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
 
-    public static ResultSet getVisitaDNIRS(String dni) {
+    public static ResultSet getVisitaNifRS(String dni) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = ?;");
@@ -36,11 +36,11 @@ public class DAOVisita {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
-public static ResultSet getVisitaCodiHistorialResultSet(int codiHistorial) {
+public static ResultSet getVisitaIEXResultSet(int codiHistorial) {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = (SELECT codiHistorial FROM PACIENTS WHERE codiHistorial = ?);");
@@ -48,7 +48,7 @@ public static ResultSet getVisitaCodiHistorialResultSet(int codiHistorial) {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR CONSULTA SQL: " + ex.getMessage());
+            System.out.println("ERROR EN SQL: " + ex.getMessage());
             return null;
         }
     }
