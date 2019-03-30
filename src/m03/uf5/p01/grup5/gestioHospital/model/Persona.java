@@ -155,7 +155,7 @@ public abstract class Persona {
     }
     
     public String toString(){
-        return "hola, he petado. Gusto en conocerle.";
+        return "error.";
     }
     public String getNom() {
         return nom;
