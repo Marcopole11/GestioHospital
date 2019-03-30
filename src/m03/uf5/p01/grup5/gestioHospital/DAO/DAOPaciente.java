@@ -5,13 +5,6 @@
  */
 package m03.uf5.p01.grup5.gestioHospital.DAO;
 
-
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 /**
  *
  * @author raulk
