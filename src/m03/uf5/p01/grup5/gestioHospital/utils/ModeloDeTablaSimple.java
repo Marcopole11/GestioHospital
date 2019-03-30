@@ -1,4 +1,4 @@
-package m03.uf6.a3;
+package m03.uf5.p01.grup5.gestioHospital.utils;
 
 
 import java.sql.*;
