@@ -134,8 +134,7 @@ public class DAOPaciente {
     }
 
     private static Pacient creaPAcientO(ResultSet rs, int numeroH) throws Exception {
-        String nifPacient = rs.getString("nifPacient");
-        int codiHistorial = rs.getInt("codiHistorial");
+        String nifPacient = rs.getString("nifPacient");        
         String nomPacient = rs.getString("nomPacient");
         String cognom1Pacient = rs.getString("cognom1Pacient");
         String cognom2Pacient = rs.getString("cognom2Pacient");
@@ -157,7 +156,7 @@ public class DAOPaciente {
     public static boolean creaPacient(Pacient pacient) throws SQLException {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
-        String consulta = "INSERT INTO PACIENTS (nifPacient, codiHistorial, numSegSoc, nomPacient, cognom1Pacient, cognom2Pacient, telefon, ciutat, codiPostal, carrer, numero, planta, porta)"
+        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, portaciutat, codiPostal,codiHistorial)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
