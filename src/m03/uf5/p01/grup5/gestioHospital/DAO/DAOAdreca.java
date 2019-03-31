@@ -26,7 +26,7 @@ public class DAOAdreca {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-           throw (new Exception("Hubo un error: " + ex.getMessage()));
+           throw (new Exception("Hubo un error1: " + ex.getMessage()));
         }
     }
     public static List<Adreca> getAdreca() throws Exception {
@@ -40,7 +40,7 @@ public class DAOAdreca {
             return llistaAdrecas;
 
         } catch (SQLException ex) {
-             throw (new Exception("Hubo un error: " + ex.getMessage()));
+             throw (new Exception("Hubo un error2: " + ex.getMessage()));
         }
     }
     private static Adreca creaAdrecaO(ResultSet rs) throws Exception {        

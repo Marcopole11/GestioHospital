@@ -9,7 +9,7 @@
  */
 DROP DATABASE IF EXISTS hospital_grup5;
 CREATE DATABASE hospital_grup5;
-CREATE USER IF NOT EXISTS 'admin_hospita_grup5l'@'127.0.0.1' IDENTIFIED BY 'admin';
+CREATE USER IF NOT EXISTS 'admin_hospita_grup5'@'127.0.0.1' IDENTIFIED BY 'admin';
 GRANT ALL PRIVILEGES ON hospital_grup5.* TO 'admin_hospital'@'127.0.0.1';
 CREATE USER IF NOT EXISTS usuario_hospital_grup5 IDENTIFIED BY 'usuari';
 GRANT SELECT, INSERT, UPDATE ON hospital_grup5.* TO usuario_hospital_grup5;
@@ -72,10 +72,7 @@ create table visites(
     nomMet VARCHAR(15),
     nifPac VARCHAR(9),
     orden Int,
-    PRIMARY KEY(codi),
-FOREIGN KEY (codiMalaltia) REFERENCES malalties(codi),
-FOREIGN KEY (nomMet) REFERENCES metges(nomMet),
-    FOREIGN KEY (nifPac) REFERENCES pacients(nifPac)
+    PRIMARY KEY(codi)
     
     
 );
@@ -94,91 +91,8 @@ create table adreca(
     PRIMARY KEY(idAdreca)
 );
 
-DROP FUNCTION IF EXISTS aPacient;
-DELIMITER // 
-CREATE FUNCTION aPacient(NcasaObloquePac BOOLEAN,NnomPac VARCHAR(15),NprimerCognomPac VARCHAR(20),NsegonCognomPac VARCHAR(20),
-NnumSegSocialPac VARCHAR(12),NtelPac VARCHAR(16),NtipoPac VARCHAR(15),NcarrerPac VARCHAR(60),NnumeroPac INT,
-NplantaPac INT,NportaPac VARCHAR(10),NciutatPac VARCHAR(30),NcodiPostalPac int) RETURNS BOOL
-BEGIN 
-    UPDATE hospital_grup5.pacients SET 
-casaObloquePac =NcasaObloquePac,
-    nomPac=NnomPac ,
-    primerCognomPac =NprimerCognomPac,
-    segonCognomPac =NsegonCognomPac,
-    numSegSocialPac =NnumSegSocialPac,    
-    telPac =NtelPac,
-    tipoPac =NtipoPac,
-    carrerPac =NcarrerPac,
-    numeroPac =NnumeroPac,
-    plantaPac =NplantaPac,
-    portaPac =NportaPac,
-    ciutatPac =NciutatPac,
-    codiPostalPac =NcodiPostalPac       
-    WHERE nifPac = NnifPac;
-    RETURN TRUE;
-END;
-// 
-DELIMITER ;
-
-GRANT EXECUTE ON FUNCTION hospital_grup5.aPacient TO usuario_hospital_grup5;
-
-
-
-DROP FUNCTION IF EXISTS aMetge;
-DELIMITER // 
-CREATE FUNCTION aMetge(NcasaObloqueMet BOOLEAN,NnomMet VARCHAR(15),NprimerCognomMet VARCHAR(20),NsegonCognomMet VARCHAR(20),
-NnumSegSocialMet VARCHAR(12),NtelMet VARCHAR(16),NnumEmpleatMet int,NsalariMensualMet int,NcodiCompteCorrentMet VARCHAR(50), NtipoMet VARCHAR(15),
-    NcarrerMet VARCHAR(60), NnumeroMet INT, NplantaMet INT, NportaMet VARCHAR(10),NciutatMet VARCHAR(30), NcodiPostalMet int) RETURNS BOOL
-
-BEGIN 
-    UPDATE hospital_grup5.metges SET 
-       casaObloqueMet =NcasaObloqueMet,
-    nomMet =NnomMet,
-    primerCognomMet =NprimerCognomMet,
-    segonCognomMet =NsegonCognomMet,
-    numSegSocialMet =NnumSegSocialMet,    
-    telMet =NtelMet,
-    numEmpleatMet =NnumEmpleatMet,
-    salariMensualMet =NsalariMensualMet,
-    codiCompteCorrentMet =NcodiCompteCorrentMet,
-    tipoMet =NtipoMet,
-    carrerMet =NcarrerMet,
-    numeroMet =NnumeroMet,
-    plantaMet =NplantaMet,
-    portaMet =NportaMet,
-    ciutatMet =NciutatMet,
-    codiPostalMet =NcodiPostalMet,   
-    WHERE nifMet = NnifMet;
-    RETURN TRUE;
-END;
-// 
-DELIMITER ;
-
-GRANT EXECUTE ON FUNCTION hospital_grup5.actualizaMetge TO usuario_hospital_grup5;
-
-
-
-DROP FUNCTION IF EXISTS aMalaltia;
-DELIMITER // 
-CREATE FUNCTION aMalaltia(Ncodi int, Nnom VARCHAR(15),
-   Ntractament VARCHAR(80), NcausaBaixa boolean, NduradaTractament INT(14)) RETURNS BOOL
-
-BEGIN 
-    UPDATE hospital_grup5.malalties SET 
-        nom = Nnom,
-        causaBaixa = NCausaBaixa,
-        tractament = Ntractament, 
-        duradaTractament = NduradaTractament
-    WHERE codi = Ncodi;
-    RETURN TRUE;
-END;
-// 
-DELIMITER ;
-
-GRANT EXECUTE ON FUNCTION hospital_grup5.aMalaltia TO usuario_hospital_grup5;
-
 INSERT INTO pacients VALUES(true, 'Cubi', 'Lemocan', 'Resat', '041985550627', '22222222J', '+33993231387', 'Carretera', 'Basetnasci sutnu', 10, 0, null, 'Tumas', 03245,0);
 INSERT INTO metges VALUES(false, 'Bergasso', 'Grande', 'Pill', '281234567840', '05413374W', '+34969491580',0, 1500, '0123456789', 'Carrer', 'Atlanta', 2, 3, 'C', 'Sabadell', 03245);
 INSERT INTO visites VALUES();
 INSERT INTO malalties VALUES(0,'refredat', 'Caldo de pollo\nBisolgrip\nBivaporux', false, 8);
-INSERT INTO adreca VALUES("Avenida", "Atlanta", 32,0,null, "Barcelona", 03245);
+INSERT INTO adreca (tipo, carrer, numero,planta,porta,ciutat,codiPostal)VALUES("Avenida", "Atlanta", 32,0,null, "Barcelona", 03245);
