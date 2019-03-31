@@ -18,8 +18,12 @@ public class vista {
     
     
     public static void main(String[] args){
-        Ventana.menuPrincipal.abrir(new ControlHospital());
-        //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
+        try {
+            Ventana.menuPrincipal.abrir(new ControlHospital());
+            //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
+        } catch (Exception ex) {
+            System.out.println("No se ha podido cargar el programa:\n"+ex.getMessage());
+        }
     }
     
     private static Scanner in=new Scanner(System.in);

@@ -60,18 +60,19 @@ public class DAOMalaltia {
         }
     }
 
-//    public static Malaltia CodiMalaltia(int codi) {
-//        try {
-//            ResultSet resultat = CodiMalaltiaResultat(codi);
-//            resultat.next();
-//            return newMalaltiaO(resultat);
-//
-//        } catch (SQLException ex) {
-//            System.out.println("ERROR: " + ex.getMessage());
-//            return null;
-//        }
-//    }
-    public static boolean updateMalaltia(Malaltia malaltia) throws Exception {
+    /*public static Malaltia CodiMalaltia(int codi) {
+        try {
+            ResultSet resultat = CodiMalaltiaResultat(codi);
+            resultat.next();
+            return newMalaltiaO(resultat);
+
+        } catch (SQLException ex) {
+            System.out.println("ERROR: " + ex.getMessage());
+            return null;
+        }
+    }*/
+    
+  /* public static boolean updateMalaltia(Malaltia malaltia) throws Exception {
         try {
 
             Connection join = ConexionDB.contectar();
@@ -89,7 +90,7 @@ public class DAOMalaltia {
         } catch (SQLException ex) {
             throw (new Exception("Hubo un error al actualizar la Malaltia en la Base de datos: " + ex.getMessage()));
         }
-    }
+    }*/
 
     public static boolean newMalaltia(Malaltia malaltia) throws Exception {
         try {
@@ -101,8 +102,8 @@ public class DAOMalaltia {
             states = join.prepareStatement(state);
             states.setInt(1, malaltia.getCodi());
             states.setString(2, malaltia.getNom());
-            states.setString(3, malaltia.isCausaBaixaString());
-            states.setString(4, malaltia.getTractament());
+            states.setString(3, malaltia.getTractament());
+            states.setBoolean(4, malaltia.isCausaBaixa());
             states.setInt(5, (int) malaltia.getDuradaTractament().toDays());
             states.executeUpdate();
             return true;

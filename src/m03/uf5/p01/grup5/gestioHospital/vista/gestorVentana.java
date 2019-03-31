@@ -45,16 +45,21 @@ public class gestorVentana {
         }
         @Override
         public void run(){
-            JFrame ventana = tipo.abrir(new ControlHospital());
-            ventana.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent we) {
-                    abierto = false;
-                    super.windowClosed(we);
-                }
-            });
-            System.out.println("salgo del hilo");
-            // este no es el fichero que toca
+            try {
+                JFrame ventana = tipo.abrir(new ControlHospital());
+                ventana.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosed(WindowEvent we) {
+                        abierto = false;
+                        super.windowClosed(we);
+                    }
+                });
+                System.out.println("salgo del hilo");
+                // este no es el fichero que toca
+            } catch (Exception ex) {
+                System.out.println("No se ha podido abrir el programa");
+                System.out.println(ex.getMessage());
+            }
         }
     }
 }

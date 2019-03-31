@@ -55,7 +55,7 @@ public class Visita {
         String mt = metge.nom + " " + metge.cognom1;
         visitar(dia, mes, any, hora, mt, diagnostic);
     }
-    private void visitar(int dia, int mes, int any, double hora, String metge, Malaltia diagnostic) {
+    public void visitar(int dia, int mes, int any, double hora, String metge, Malaltia diagnostic) {
         if (this.metge.length() == 0) {
             this.data = LocalDateTime.of(any, mes, dia, (int) hora, (int) ((hora - (int) hora) * 100), 0);
             this.metge = metge;
