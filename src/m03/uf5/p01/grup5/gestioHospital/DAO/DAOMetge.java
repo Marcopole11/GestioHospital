@@ -108,7 +108,7 @@ public class DAOMetge {
         }
     }
 
-    public static boolean updateMetge(Metge metge) {
+    public static boolean updateMetge(Metge metge) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             CallableStatement states = join.prepareCall("{call actualizaMetge(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}"); // revisa
@@ -128,8 +128,7 @@ public class DAOMetge {
             states.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return false;
+            throw(new Exception("Hubo un error al actlualizar el médico en la Base de datos: "+ex.getMessage()));
         }
     }
 
@@ -155,12 +154,10 @@ public class DAOMetge {
             states.setInt(13, metge.getNumEmpleat());
             states.setInt(14, metge.getSalariMensual());
             states.setString(15, metge.getCodiCompteCorrent());
-        states.executeUpdate();
+            states.executeUpdate();
+            return true;
         } catch (SQLException ex) {
             throw(new Exception("Hubo un error al registrar el médico en la Base de datos: "+ex.getMessage()));
         }
-
-        
-        return true;
     }
 }

@@ -224,7 +224,7 @@ public class ControlHospital {
         elObjeto.nouMetge(casaObloque, nom, primerCognom, segonCognom, numSegSocial, nif, tel, salariMensual, codiCompteCorrent, tipo, carrer, numero, planta, piso, ciudad, codiPostal);
     }
     
-    public void comprobarNovaMalaltia(String Malal,String Motiu,String Descriu, String Durada) throws SQLException{
+    public void comprobarNovaMalaltia(String Malal,String Motiu,String Descriu, String Durada) throws Exception{
         String nom=Malal,tractament=Descriu;
         int duradaTractament=Integer.parseInt(Durada);
         boolean causaBaixa=false;

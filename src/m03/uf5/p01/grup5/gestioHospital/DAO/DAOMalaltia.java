@@ -29,7 +29,7 @@ public class DAOMalaltia {
         }
     }
 
-    public static List<Malaltia> MalaltiasIN() {
+    public static List<Malaltia> MalaltiasIN() throws Exception {
         try {
 
             ArrayList<Malaltia> malalt = new ArrayList<>();
@@ -65,19 +65,19 @@ public class DAOMalaltia {
         }
     }
 
-    public static Malaltia CodiMalaltia(int codi) {
-        try {
-            ResultSet resultat = CodiMalaltiaResultat(codi);
-            resultat.next();
-            return newMalaltiaO(resultat);
+//    public static Malaltia CodiMalaltia(int codi) {
+//        try {
+//            ResultSet resultat = CodiMalaltiaResultat(codi);
+//            resultat.next();
+//            return newMalaltiaO(resultat);
+//
+//        } catch (SQLException ex) {
+//            System.out.println("ERROR: " + ex.getMessage());
+//            return null;
+//        }
+//    }
 
-        } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
-        }
-    }
-
-    public static boolean updateMalaltia(Malaltia malaltia) {
+    public static boolean updateMalaltia(Malaltia malaltia) throws Exception {
         try {
 
             Connection join = ConexionDB.contectar();
@@ -93,25 +93,28 @@ public class DAOMalaltia {
 
             return true;
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return false;
+            throw(new Exception("Hubo un error al actualizar la Malaltia en la Base de datos: "+ex.getMessage()));
         }
     }
 
-    public static boolean newMalaltia(Malaltia malaltia) throws SQLException {
-        Connection join = ConexionDB.contectar();
-        PreparedStatement states = null;
+    public static boolean newMalaltia(Malaltia malaltia) throws Exception{
+        try {
+            Connection join = ConexionDB.contectar();
+            PreparedStatement states = null;
 
-        String state = "INSERT INTO malalties VALUES(?,?,?,?,?)"; // REVISAR
+            String state = "INSERT INTO malalties VALUES(?,?,?,?,?)"; // REVISAR
 
-        states = join.prepareStatement(state);
-        states.setInt(1, malaltia.getCodi());
-        states.setString(2, malaltia.getNom());
-        states.setString(3, malaltia.isCausaBaixaString());
-        states.setString(4, malaltia.getTractament());
-        states.setInt(5, (int) malaltia.getDuradaTractament().toDays());
-        states.executeUpdate();
-        return true;
+            states = join.prepareStatement(state);
+            states.setInt(1, malaltia.getCodi());
+            states.setString(2, malaltia.getNom());
+            states.setString(3, malaltia.isCausaBaixaString());
+            states.setString(4, malaltia.getTractament());
+            states.setInt(5, (int) malaltia.getDuradaTractament().toDays());
+            states.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            throw(new Exception("Hubo un error al registrar la Malaltia en la Base de datos: "+ex.getMessage()));
+        }
     }
 
     private static Malaltia newMalaltiaO(ResultSet resultat) throws Exception{
