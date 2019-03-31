@@ -57,7 +57,7 @@ public class DAOVisita {
         }
     }
 
-    public static boolean createVisita(Visita visita) throws SQLException {
+    public static boolean createVisita(Visita visita) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
