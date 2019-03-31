@@ -30,7 +30,7 @@ public class DAOMetge {
             ResultSet resultat = MetgesResultat();
 
             while (resultat.next()) {
-                malalt.add(newMetgeO(resultat));
+                malalt.add(newMetgeO(resultat,malalt.size()));
             }
             Metge[] masMalaltias = new Metge[malalt.size()];
             return malalt;
@@ -64,10 +64,10 @@ public class DAOMetge {
         }
     }
      */
-    private static Metge newMetgeO(ResultSet resultat) throws Exception {
+    private static Metge newMetgeO(ResultSet resultat,int numA) throws Exception {
         try {
             boolean COB = resultat.getBoolean("casaObloqueMet");
-            int numEmpleatMet = resultat.getInt("numEmpleatMet");
+            //int numEmpleatMet = resultat.getInt("numEmpleatMet");
             String nifMet = resultat.getString("nifMet");
             String nomMetge = resultat.getString("nomMet");
             String primerCognomMet = resultat.getString("primerCognomMet");
@@ -84,7 +84,7 @@ public class DAOMetge {
             int plantaMet = resultat.getInt("plantaMet");
             String portaMet = resultat.getString("portaMet");
 
-            return new Metge(COB, nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet, salariMensualMet, codiCompteCorrentMet, tipoMet, carrerMet, numeroMet, plantaMet, portaMet, ciutatMet, codiPostalMet);
+            return new Metge(COB, nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numA, salariMensualMet, codiCompteCorrentMet, tipoMet, carrerMet, numeroMet, plantaMet, portaMet, ciutatMet, codiPostalMet);
         } catch (SQLException ex) {
             throw (new Exception("Hubo un error al crear el metge en la Base de datos" + ex.getMessage()));
         }

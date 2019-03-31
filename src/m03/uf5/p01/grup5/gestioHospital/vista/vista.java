@@ -17,13 +17,14 @@ import m03.uf5.p01.grup5.gestioHospital.controlador.*;
 public class vista {
     
     
-    public static void main(String[] args){
-        try {
-            Ventana.menuPrincipal.abrir(new ControlHospital());
-            //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
-        } catch (Exception ex) {
-            System.out.println("No se ha podido cargar el programa: "+ex.getMessage());
-        }
+    public static void main(String[] args) throws Exception{
+        Ventana.menuPrincipal.abrir(new ControlHospital());
+////        try {
+////            Ventana.menuPrincipal.abrir(new ControlHospital());
+////            //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
+////        } catch (Exception ex) {
+////            System.out.println("No se ha podido cargar el programa: "+ex.getMessage());
+////        }
     }
     
     private static Scanner in=new Scanner(System.in);
