@@ -70,9 +70,9 @@ create table visites(
     fecha DATETIME,
     codiMalaltia INT,
     nomMet CHAR(9),
-PRIMARY KEY(codi),
-FOREIGN KEY (codiMalaltia) REFERENCES MALALTIES(codiMalaltia),
-     FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
+    PRIMARY KEY(codi),
+    FOREIGN KEY (codiMalaltia) REFERENCES MALALTIES(codiMalaltia),
+    FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
 );
 
 create table malalties(
