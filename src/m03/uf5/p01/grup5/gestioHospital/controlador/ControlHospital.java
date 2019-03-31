@@ -38,80 +38,82 @@ public class ControlHospital {
 
     public ControlHospital() {
         List<Adreca> adrecas = new ArrayList<Adreca>();
-        try {
-            ruta = Paths.get("").toAbsolutePath().toString() + "\\saved";
-        } catch (Exception e) {
-            ruta = System.getProperty("user.dir") + "\\saved";
-        }
-        File directorio = new File(ruta);
-        directorio.mkdir();
-        try {
-            File Registro = new File(ruta + "\\adreca.csv");
-            FileReader fr;
-            BufferedReader br;
-            String lect;
-            int totalRead;
-            if (Registro.exists()) {
-                fr = new FileReader(Registro);
-                br = new BufferedReader(fr);
-                int[] orden = ordenar(br.readLine(), Adreca.CSV());
-                elObjeto = new Hospital(new Adreca(br.readLine().split(";"), orden));
-                totalRead = 1;
-                while ((lect = br.readLine()) != null) {
-                    totalRead++;
-                    adrecas.add(new Adreca(lect.split(";"), orden));
-                }
-                fr.close();
-                br.close();
-                System.out.println(totalRead + " direcciones leidas");
-            } else {
-                elObjeto = new Hospital("Avenida", "Atlanta", 32, 0, null, "Barcelona", 3245);
-            }
-            Registro = new File(ruta + "\\metges.csv");
-            if (Registro.exists()) {
-                fr = new FileReader(Registro);
-                br = new BufferedReader(fr);
-                int[] orden = ordenar(br.readLine(), Metge.CSV());
-                totalRead = 0;
-                while ((lect = br.readLine()) != null) {
-                    totalRead++;
-                    elObjeto.metges.add(new Metge(lect.split(";"), adrecas));
-                }
-                fr.close();
-                br.close();
-                System.out.println(totalRead + " medicos leidos");
-            }
-            Registro = new File(ruta + "\\malaltia.csv");
-            if (Registro.exists()) {
-                fr = new FileReader(Registro);
-                br = new BufferedReader(fr);
-                int[] orden = ordenar(br.readLine(), Malaltia.CSV());
-                totalRead = 0;
-                while ((lect = br.readLine()) != null) {
-                    totalRead++;
-                    elObjeto.malalties.add(new Malaltia(lect.split(";")));
-                }
-                fr.close();
-                br.close();
-                System.out.println(totalRead + " malalties leidas");
-            }
-            Registro = new File(ruta + "\\pacients.csv");
-            if (Registro.exists()) {
-                fr = new FileReader(Registro);
-                br = new BufferedReader(fr);
-                int[] orden = ordenar(br.readLine(), Pacient.CSV());
-                totalRead = 0;
-                while ((lect = br.readLine()) != null) {
-                    totalRead++;
-                    elObjeto.pacients.add(new Pacient(totalRead, lect.split(";"), adrecas, elObjeto.malalties));
-                }
-                fr.close();
-                br.close();
-                System.out.println(totalRead + " pacientes leidos");
-            }
-        } catch (Exception e) {
-            System.out.println("ERROR: " + e.getMessage());
-        }
+        elObjeto.malalties = DAOMalaltia.MalaltiasIN();
+        elObjeto.metges = DAOMetge.Metges();
+//        try {
+//            ruta = Paths.get("").toAbsolutePath().toString() + "\\saved";
+//        } catch (Exception e) {
+//            ruta = System.getProperty("user.dir") + "\\saved";
+//        }
+//        File directorio = new File(ruta);
+//        directorio.mkdir();
+//        try {
+//            File Registro = new File(ruta + "\\adreca.csv");
+//            FileReader fr;
+//            BufferedReader br;
+//            String lect;
+//            int totalRead;
+//            if (Registro.exists()) {
+//                fr = new FileReader(Registro);
+//                br = new BufferedReader(fr);
+//                int[] orden = ordenar(br.readLine(), Adreca.CSV());
+//                elObjeto = new Hospital(new Adreca(br.readLine().split(";"), orden));
+//                totalRead = 1;
+//                while ((lect = br.readLine()) != null) {
+//                    totalRead++;
+//                    adrecas.add(new Adreca(lect.split(";"), orden));
+//                }
+//                fr.close();
+//                br.close();
+//                System.out.println(totalRead + " direcciones leidas");
+//            } else {
+//                elObjeto = new Hospital("Avenida", "Atlanta", 32, 0, null, "Barcelona", 3245);
+//            }
+//            Registro = new File(ruta + "\\metges.csv");
+//            if (Registro.exists()) {
+//                fr = new FileReader(Registro);
+//                br = new BufferedReader(fr);
+//                int[] orden = ordenar(br.readLine(), Metge.CSV());
+//                totalRead = 0;
+//                while ((lect = br.readLine()) != null) {
+//                    totalRead++;
+//                    elObjeto.metges.add(new Metge(lect.split(";"), adrecas));
+//                }
+//                fr.close();
+//                br.close();
+//                System.out.println(totalRead + " medicos leidos");
+//            }
+//            Registro = new File(ruta + "\\malaltia.csv");
+//            if (Registro.exists()) {
+//                fr = new FileReader(Registro);
+//                br = new BufferedReader(fr);
+//                int[] orden = ordenar(br.readLine(), Malaltia.CSV());
+//                totalRead = 0;
+//                while ((lect = br.readLine()) != null) {
+//                    totalRead++;
+//                    elObjeto.malalties.add(new Malaltia(lect.split(";")));
+//                }
+//                fr.close();
+//                br.close();
+//                System.out.println(totalRead + " malalties leidas");
+//            }
+//            Registro = new File(ruta + "\\pacients.csv");
+//            if (Registro.exists()) {
+//                fr = new FileReader(Registro);
+//                br = new BufferedReader(fr);
+//                int[] orden = ordenar(br.readLine(), Pacient.CSV());
+//                totalRead = 0;
+//                while ((lect = br.readLine()) != null) {
+//                    totalRead++;
+//                    elObjeto.pacients.add(new Pacient(totalRead, lect.split(";"), adrecas, elObjeto.malalties));
+//                }
+//                fr.close();
+//                br.close();
+//                System.out.println(totalRead + " pacientes leidos");
+//            }
+//        } catch (Exception e) {
+//            System.out.println("ERROR: " + e.getMessage());
+//        }
     }
 
     public boolean guardarSession() {
