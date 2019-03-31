@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.Malaltia;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
@@ -112,13 +114,17 @@ public class DAOMalaltia {
         return true;
     }
 
-    private static Malaltia newMalaltiaO(ResultSet resultat) throws SQLException {
-        int codi = resultat.getInt("codiMalaltia");
-        String nom = resultat.getString("nomMalaltia");
-        boolean causabaixa = resultat.getString("causaBaixa").toLowerCase().equals("si");
-        String tractament = resultat.getString("tractament");
-        long durac = resultat.getInt("duracio");
+    private static Malaltia newMalaltiaO(ResultSet resultat) throws Exception{
+        try {
+            int codi = resultat.getInt("codiMalaltia");
+            String nom = resultat.getString("nomMalaltia");
+            boolean causabaixa = resultat.getString("causaBaixa").toLowerCase().equals("si");
+            String tractament = resultat.getString("tractament");
+            long durac = resultat.getInt("duracio");
 
-        return new Malaltia(codi, nom, tractament, causabaixa, durac);
+            return new Malaltia(codi, nom, tractament, causabaixa, durac);
+        } catch (SQLException ex) {
+            throw(new Exception("Se ha perdido el acceso a la Base de datos: "+ex.getMessage()));
+        }
     }
 }

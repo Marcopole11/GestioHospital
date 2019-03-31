@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
 import m03.uf5.p01.grup5.gestioHospital.model.Metge;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
@@ -131,29 +133,34 @@ public class DAOMetge {
         }
     }
 
-    public static boolean newMetge(Metge metge) throws SQLException {
+    public static boolean newMetge(Metge metge) throws Exception{
         Connection join = ConexionDB.contectar();
-        PreparedStatement states = join.prepareStatement("INSERT INTO metges "
-                + "(nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, ciutatMet, codiPostalMet, carrerMet, numeroMet, plantaMet, portaMet, numEmpleatMet, salariMensualMet, codiCompteCorrentMet) "
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-        states.setString(1, metge.getNom());
-        states.setString(2, metge.getCognom1());
-        states.setString(3, metge.getCognom2());
-        states.setString(4, metge.getNumSegSocial());
-        states.setString(5, metge.getNif());
-        states.setString(6, metge.getTelefon());
-        states.setString(7, metge.getAdreca().getCiutat());
-        states.setLong(8, metge.getAdreca().getCodiPostal());
-        states.setString(9, metge.getAdreca().getCarrer());
-        states.setInt(10, metge.getAdreca().getNumero());
-        states.setString(11, metge.getAdreca().getPlanta()+"");
-        states.setString(12, metge.getAdreca().getPorta());
-        states.setInt(13, metge.getNumEmpleat());
-        states.setInt(14, metge.getSalariMensual());
-        states.setString(15, metge.getCodiCompteCorrent());
-
+        PreparedStatement states;
+        try {
+            states = join.prepareStatement("INSERT INTO metges "
+                    + "(nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, ciutatMet, codiPostalMet, carrerMet, numeroMet, plantaMet, portaMet, numEmpleatMet, salariMensualMet, codiCompteCorrentMet) "
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            states.setString(1, metge.getNom());
+            states.setString(2, metge.getCognom1());
+            states.setString(3, metge.getCognom2());
+            states.setString(4, metge.getNumSegSocial());
+            states.setString(5, metge.getNif());
+            states.setString(6, metge.getTelefon());
+            states.setString(7, metge.getAdreca().getCiutat());
+            states.setLong(8, metge.getAdreca().getCodiPostal());
+            states.setString(9, metge.getAdreca().getCarrer());
+            states.setInt(10, metge.getAdreca().getNumero());
+            states.setString(11, metge.getAdreca().getPlanta()+"");
+            states.setString(12, metge.getAdreca().getPorta());
+            states.setInt(13, metge.getNumEmpleat());
+            states.setInt(14, metge.getSalariMensual());
+            states.setString(15, metge.getCodiCompteCorrent());
         states.executeUpdate();
+        } catch (SQLException ex) {
+            throw(new Exception("Hubo un error al registrar el médico en la Base de datos: "+ex.getMessage()));
+        }
+
+        
         return true;
     }
 }

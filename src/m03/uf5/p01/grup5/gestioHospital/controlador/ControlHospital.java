@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.*;
 import m03.uf5.p01.grup5.gestioHospital.vista.Ventana;
 import m03.uf5.p01.grup5.gestioHospital.vista.vista;
+import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMalaltia;
 
 /**
  *
@@ -222,7 +224,7 @@ public class ControlHospital {
         elObjeto.nouMetge(casaObloque, nom, primerCognom, segonCognom, numSegSocial, nif, tel, salariMensual, codiCompteCorrent, tipo, carrer, numero, planta, piso, ciudad, codiPostal);
     }
     
-    public void comprobarNovaMalaltia(String Malal,String Motiu,String Descriu, String Durada){
+    public void comprobarNovaMalaltia(String Malal,String Motiu,String Descriu, String Durada) throws SQLException{
         String nom=Malal,tractament=Descriu;
         int duradaTractament=Integer.parseInt(Durada);
         boolean causaBaixa=false;
@@ -232,6 +234,7 @@ public class ControlHospital {
             causaBaixa=false;
         }
         elObjeto.novaMalatia(nom, tractament, causaBaixa, duradaTractament);
+        DAOMalaltia.newMalaltia(elObjeto.malalties.get(elObjeto.malalties.size()-1));
     }
     
     public int comprobarDniPacient(String tempnif) throws Exception {
