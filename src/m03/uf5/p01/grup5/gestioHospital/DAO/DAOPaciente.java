@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import m03.uf5.p01.grup5.gestioHospital.controlador.GestioHospital;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
 import m03.uf5.p01.grup5.gestioHospital.model.Pacient;
@@ -34,7 +35,7 @@ public class DAOPaciente {
         }
     }
 
-    public static Pacient[] getPacients() throws Exception {
+    public static List<Pacient> getPacients() throws Exception {
         try {
             ArrayList<Pacient> llistaPacients = new ArrayList<>();
             ResultSet rs = getPacientsResultSet();
@@ -42,7 +43,7 @@ public class DAOPaciente {
                 llistaPacients.add(creaPAcientO(rs, llistaPacients.size() - 1));
             }
             Pacient[] aPacients = new Pacient[llistaPacients.size()];
-            return llistaPacients.toArray(aPacients);
+            return llistaPacients;
 
         } catch (SQLException ex) {
             System.out.println("ERROR EN SQL: " + ex.getMessage());
@@ -153,7 +154,7 @@ public class DAOPaciente {
 
     }
 
-    public static boolean creaPacient(Pacient pacient, int iex) throws SQLException {
+    public static boolean creaPacient(Pacient pacient, int iex) throws Exception {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
         String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, porta,ciutat, codiPostal,codiHistorial)"
