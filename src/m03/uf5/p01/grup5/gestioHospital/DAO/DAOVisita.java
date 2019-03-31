@@ -64,7 +64,7 @@ public class DAOVisita {
         }
     }
 
-    public static boolean createVisita(Visita visita) throws Exception {
+    public static boolean createVisita(Visita visita, String DNI) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -72,10 +72,10 @@ public class DAOVisita {
                     + " (fecha, codiMalaltia, dniMetge, dniPacient)"
                     + " VALUES (?,?,?,?)";
             states = join.prepareStatement(consulta);
-            states.setString(1, visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")));
+            states.setDate(1, (Date) Date.from(visita.getData().toInstant(ZoneOffset.UTC)));//visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")
             states.setInt(2, visita.getDiagnostic().getCodi());
             states.setString(3, visita.getMetge());
-            states.setString(4, visita.getDni());
+            states.setString(4, DNI);
             states.executeUpdate();
             return true;
 
