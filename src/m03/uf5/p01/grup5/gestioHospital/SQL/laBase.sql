@@ -7,6 +7,7 @@
  * Author:  miral
  * Created: Mar 28, 2019
  */
+DROP DATABASE IF EXIST hospital_grup5;
 CREATE DATABASE hospital_grup5;
 CREATE USER IF NOT EXISTS 'admin_hospita_grup5l'@'127.0.0.1' IDENTIFIED BY 'admin';
 GRANT ALL PRIVILEGES ON hospital_grup5.* TO 'admin_hospital'@'127.0.0.1';
