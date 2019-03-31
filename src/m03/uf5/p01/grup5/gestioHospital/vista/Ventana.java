@@ -453,7 +453,7 @@ public class Ventana {
         btnNIF.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idNIFMetge.abrir(saved);
+                Ventana.idNIFMetge.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -461,7 +461,7 @@ public class Ventana {
         btnCodi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Ventana.idCodiMetge.abrir(saved);
+                Ventana.idCodiMetge.abrir(saved,tempVData);
                 ventana.dispose();
             }
         });
@@ -595,8 +595,8 @@ public class Ventana {
                 } else {
                     try {
                         JOptionPane.showMessageDialog(null, "El codi de historial es " + codi + ".");
-                        saved.comprobarCodiMetge(codi);
-                        Ventana.codiMalaltia.abrir(saved);
+                        tempVData.metge = saved.comprobarCodiMetge(codi);
+                        Ventana.codiMalaltia.abrir(saved,tempVData);
                         ventana.dispose();
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage());
@@ -631,8 +631,8 @@ public class Ventana {
                     } else {
                         try {
                             JOptionPane.showMessageDialog(null, "El dni es " + nif + ".");
-                            saved.comprobarDniMetge(nif);
-                            Ventana.codiMalaltia.abrir(saved);
+                            tempVData.metge = saved.comprobarDniMetge(nif);
+                            Ventana.codiMalaltia.abrir(saved,tempVData);
                             ventana.dispose();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -662,6 +662,14 @@ public class Ventana {
         btnEnviar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                saved.elObjeto.pacients.get(tempVData.pacient)
+                        .historial.visites.visitar(
+                                tempVData.tiempo(0), 
+                                tempVData.tiempo(1), 
+                                tempVData.tiempo(2),
+                                tempVData.hora(), 
+                                tempVData.metge, 
+                                tempVData.diagnostic);
                 JOptionPane.showMessageDialog(null, "Visita registrada correctamente");
                 Ventana.menuPrincipal.abrir(saved);
                 ventana.dispose();

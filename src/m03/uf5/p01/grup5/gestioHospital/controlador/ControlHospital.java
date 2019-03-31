@@ -263,18 +263,20 @@ public class ControlHospital {
         }
     }
 
-    public void comprobarDniMetge(String tempnifmetge) throws Exception {
-        if (elObjeto.metge(tempnifmetge) != null) {
-
+    public Metge comprobarDniMetge(String tempnifmetge) throws Exception {
+        Metge metge = elObjeto.metge(tempnifmetge);
+        if (metge != null) {
+            return metge;
         } else {
             throw (new Exception("Este dni no corresponde a ningun pacient, introduce otro. "));
         }     
     }
     
-    public void comprobarCodiMetge(String codmetge) throws Exception {
-         int codi = Integer.parseInt(codmetge);
-        if (elObjeto.metges.get(codi) != null) {
-
+    public Metge comprobarCodiMetge(String codmetge) throws Exception {
+        int codi = Integer.parseInt(codmetge);
+        Metge metge = elObjeto.metges.get(codi);
+        if (metge != null) {
+            return metge;
         } else {
             throw (new Exception("Este dni no corresponde a ningun pacient, introduce otro. "));
         }  
