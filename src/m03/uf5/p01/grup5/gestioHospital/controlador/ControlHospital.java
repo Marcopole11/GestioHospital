@@ -22,8 +22,6 @@ import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.DAO.DAOAdreca;
 import m03.uf5.p01.grup5.gestioHospital.DAO.DAOPaciente;
 import m03.uf5.p01.grup5.gestioHospital.model.*;
-import m03.uf5.p01.grup5.gestioHospital.vista.Ventana;
-import m03.uf5.p01.grup5.gestioHospital.vista.vista;
 import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMalaltia;
 import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMetge;
 

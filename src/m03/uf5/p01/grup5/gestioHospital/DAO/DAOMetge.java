@@ -69,7 +69,7 @@ public class DAOMetge {
             boolean COB = resultat.getBoolean("casaObloqueMet");
             int numEmpleatMet = resultat.getInt("numEmpleatMet");
             String nifMet = resultat.getString("nifMet");
-            String nomMetge = resultat.getString("nomMetge");
+            String nomMetge = resultat.getString("nomMet");
             String primerCognomMet = resultat.getString("primerCognomMet");
             String segonCognomMet = resultat.getString("segonCognomMet");
             String numSegSocialMet = resultat.getString("numSegSocialMet");
