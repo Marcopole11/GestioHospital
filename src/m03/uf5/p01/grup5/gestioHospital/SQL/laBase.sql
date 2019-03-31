@@ -74,8 +74,8 @@ create table visites(
     orden Int,
     PRIMARY KEY(codi),
 FOREIGN KEY (codiMalaltia) REFERENCES malalties(codi),
-FOREIGN KEY (nomMet) REFERENCES METGES(nomMet),
-    FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac)
+FOREIGN KEY (nomMet) REFERENCES metges(nomMet),
+    FOREIGN KEY (nifPac) REFERENCES pacients(nifPac)
     
     
 );
@@ -100,7 +100,7 @@ CREATE FUNCTION aPacient(NcasaObloquePac BOOLEAN,NnomPac VARCHAR(15),NprimerCogn
 NnumSegSocialPac VARCHAR(12),NtelPac VARCHAR(16),NtipoPac VARCHAR(15),NcarrerPac VARCHAR(60),NnumeroPac INT,
 NplantaPac INT,NportaPac VARCHAR(10),NciutatPac VARCHAR(30),NcodiPostalPac int) RETURNS BOOL
 BEGIN 
-    UPDATE hospital_grup5.PACIENTS SET 
+    UPDATE hospital_grup5.pacients SET 
 casaObloquePac =NcasaObloquePac,
     nomPac=NnomPac ,
     primerCognomPac =NprimerCognomPac,
@@ -131,7 +131,7 @@ NnumSegSocialMet VARCHAR(12),NtelMet VARCHAR(16),NnumEmpleatMet int,NsalariMensu
     NcarrerMet VARCHAR(60), NnumeroMet INT, NplantaMet INT, NportaMet VARCHAR(10),NciutatMet VARCHAR(30), NcodiPostalMet int) RETURNS BOOL
 
 BEGIN 
-    UPDATE hospital_grup5.METGES SET 
+    UPDATE hospital_grup5.metges SET 
        casaObloqueMet =NcasaObloqueMet,
     nomMet =NnomMet,
     primerCognomMet =NprimerCognomMet,
@@ -164,7 +164,7 @@ CREATE FUNCTION aMalaltia(Ncodi int, Nnom VARCHAR(15),
    Ntractament VARCHAR(80), NcausaBaixa boolean, NduradaTractament INT(14)) RETURNS BOOL
 
 BEGIN 
-    UPDATE hospital_grup5.MALALTIES SET 
+    UPDATE hospital_grup5.malalties SET 
         nom = Nnom,
         causaBaixa = NCausaBaixa,
         tractament = Ntractament, 
