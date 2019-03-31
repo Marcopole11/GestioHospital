@@ -55,22 +55,15 @@ casaObloqueMet BOOLEAN,
     PRIMARY KEY(nifMet)
 );
 
-CREATE TABLE historial(
-    nifPac VARCHAR(9),
-    codi INT,
-    orden Int,
-Hcodi int audto_increment,
-PRIMARY KEY(Hcodi),
-    FOREIGN KEY (codi) REFERENCES visites(codi),
-     FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac)
-);
-
 create table visites(
     codi INT auto_increment,
     fecha DATETIME,
     codiMalaltia INT,
     nomMet CHAR(9),
+ nifPac VARCHAR(9),
+orden Int,
     PRIMARY KEY(codi),
+ FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac),
     FOREIGN KEY (codiMalaltia) REFERENCES MALALTIES(codiMalaltia),
     FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
 );

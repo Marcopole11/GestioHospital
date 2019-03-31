@@ -107,5 +107,8 @@ public class Visita {
     public String getMetge() {
         return metge;
     }
+    public Malaltia getDiagnostic(){
+        return diagnostic;
+    }
 
 }
