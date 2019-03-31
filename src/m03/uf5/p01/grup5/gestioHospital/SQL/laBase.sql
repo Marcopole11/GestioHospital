@@ -7,19 +7,21 @@
  * Author:  miral
  * Created: Mar 28, 2019
  */
-CREATE DATABASE hospital;
-CREATE USER 'admin_hospital'@'127.0.0.1' IDENTIFIED BY 'admin';
-GRANT ALL PRIVILEGES ON hospital.* TO 'admin_hospital'@'127.0.0.1';
+CREATE DATABASE hospital_grup5;
+CREATE USER IF NOT EXISTS 'admin_hospita_grup5l'@'127.0.0.1' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON hospital_grup5.* TO 'admin_hospital'@'127.0.0.1';
+CREATE USER IF NOT EXISTS usuario_hospital_grup5 IDENTIFIED BY 'usuari';
+GRANT SELECT, INSERT, UPDATE ON hospital_grup5.* TO usuario_hospital_grup5;
 FLUSH PRIVILEGES;
-USE hospital;
+USE hospital_grup5;
 
 create table pacients(
     casaObloquePac BOOLEAN,
     nomPac VARCHAR(15),
     primerCognomPac VARCHAR(20),
     segonCognomPac VARCHAR(20),
-    numSegSocialPac VARCHAR(12),
-    nifPac VARCHAR(9),
+    numSegSocialPac VARCHAR(12) UNIQUE NOT NULL,
+    nifPac VARCHAR(9) UNIQUE NOT NULL,
     telPac VARCHAR(16),
     tipoPac VARCHAR(15),
     carrerPac VARCHAR(60),
@@ -28,7 +30,7 @@ create table pacients(
     portaPac VARCHAR(10),
     ciutatPac VARCHAR(30),
     codiPostalPac int,
-    iexPac int,
+    iexPac int UNIQUE NOT NULL,
     PRIMARY KEY(nifPac)
 );
 
@@ -37,10 +39,10 @@ casaObloqueMet BOOLEAN,
     nomMet VARCHAR(15),
     primerCognomMet VARCHAR(20),
     segonCognomMet VARCHAR(20),
-    numSegSocialMet VARCHAR(12),
-    nifMet VARCHAR(9),
+    numSegSocialMet VARCHAR(12)UNIQUE NOT NULL,
+    nifMet VARCHAR(9) UNIQUE NOT NULL,
     telMet VARCHAR(16),
-    numEmpleatMet int,
+    numEmpleatMet int UNIQUE NOT NULL,
     salariMensualMet int,
     codiCompteCorrentMet VARCHAR(50),
     tipoMet VARCHAR(15),
@@ -53,11 +55,24 @@ casaObloqueMet BOOLEAN,
     PRIMARY KEY(nifMet)
 );
 
+CREATE TABLE historial(
+    nifPac VARCHAR(9),
+    codi INT,
+    orden Int,
+Hcodi int audto_increment,
+PRIMARY KEY(Hcodi),
+    FOREIGN KEY (codi) REFERENCES visites(codi),
+     FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac)
+);
+
 create table visites(
-    dia int,
-    mes int,  
-    anyV int, 
-    hora double
+    codi INT auto_increment,
+    fecha DATETIME,
+    codiMalaltia INT,
+    nomMet CHAR(9),
+PRIMARY KEY(codi),
+FOREIGN KEY (codiMalaltia) REFERENCES MALALTIES(codiMalaltia),
+     FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
 );
 
 create table malalties(
@@ -68,6 +83,90 @@ create table malalties(
     duradaTractament INT(14),
     PRIMARY KEY(codi)
 );
+
+
+DROP FUNCTION IF EXISTS aPacient;
+DELIMITER // 
+CREATE FUNCTION aPacient(NcasaObloquePac BOOLEAN,NnomPac VARCHAR(15),NprimerCognomPac VARCHAR(20),NsegonCognomPac VARCHAR(20),
+NnumSegSocialPac VARCHAR(12),NtelPac VARCHAR(16),NtipoPac VARCHAR(15),NcarrerPac VARCHAR(60),NnumeroPac INT,
+NplantaPac INT,NportaPac VARCHAR(10),NciutatPac VARCHAR(30),NcodiPostalPac int) RETURNS BOOL
+BEGIN 
+    UPDATE hospital_grup5.PACIENTS SET 
+casaObloquePac =NcasaObloquePac,
+    nomPac=NnomPac ,
+    primerCognomPac =NprimerCognomPac,
+    segonCognomPac =NsegonCognomPac,
+    numSegSocialPac =NnumSegSocialPac,    
+    telPac =NtelPac,
+    tipoPac =NtipoPac,
+    carrerPac =NcarrerPac,
+    numeroPac =NnumeroPac,
+    plantaPac =NplantaPac,
+    portaPac =NportaPac,
+    ciutatPac =NciutatPac,
+    codiPostalPac =NcodiPostalPac       
+    WHERE nifPac = NnifPac;
+    RETURN TRUE;
+END;
+// 
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION hospital_grup5.aPacient TO usuario_hospital_grup5;
+
+
+
+DROP FUNCTION IF EXISTS aMetge;
+DELIMITER // 
+CREATE FUNCTION aMetge(NcasaObloqueMet BOOLEAN,NnomMet VARCHAR(15),NprimerCognomMet VARCHAR(20),NsegonCognomMet VARCHAR(20),
+NnumSegSocialMet VARCHAR(12),NtelMet VARCHAR(16),NnumEmpleatMet int,NsalariMensualMet int,NcodiCompteCorrentMet VARCHAR(50), NtipoMet VARCHAR(15),
+    NcarrerMet VARCHAR(60), NnumeroMet INT, NplantaMet INT, NportaMet VARCHAR(10),NciutatMet VARCHAR(30), NcodiPostalMet int) RETURNS BOOL
+
+BEGIN 
+    UPDATE hospital_grup5.METGES SET 
+       casaObloqueMet =NcasaObloqueMet,
+    nomMet =NnomMet,
+    primerCognomMet =NprimerCognomMet,
+    segonCognomMet =NsegonCognomMet,
+    numSegSocialMet =NnumSegSocialMet,    
+    telMet =NtelMet,
+    numEmpleatMet =NnumEmpleatMet,
+    salariMensualMet =NsalariMensualMet,
+    codiCompteCorrentMet =NcodiCompteCorrentMet,
+    tipoMet =NtipoMet,
+    carrerMet =NcarrerMet,
+    numeroMet =NnumeroMet,
+    plantaMet =NplantaMet,
+    portaMet =NportaMet,
+    ciutatMet =NciutatMet,
+    codiPostalMet =NcodiPostalMet,   
+    WHERE nifMet = NnifMet;
+    RETURN TRUE;
+END;
+// 
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION hospital_grup5.actualizaMetge TO usuario_hospital_grup5;
+
+
+
+DROP FUNCTION IF EXISTS aMalaltia;
+DELIMITER // 
+CREATE FUNCTION aMalaltia(Ncodi int, Nnom VARCHAR(15),
+   Ntractament VARCHAR(80), NcausaBaixa boolean, NduradaTractament INT(14)) RETURNS BOOL
+
+BEGIN 
+    UPDATE hospital_grup5.MALALTIES SET 
+        nom = Nnom,
+        causaBaixa = NCausaBaixa,
+        tractament = Ntractament, 
+        duradaTractament = NduradaTractament
+    WHERE codi = Ncodi;
+    RETURN TRUE;
+END;
+// 
+DELIMITER ;
+
+GRANT EXECUTE ON FUNCTION hospital_grup5.aMalaltia TO usuario_hospital_grup5;
 
 INSERT INTO pacients VALUES(true, 'Cubi', 'Lemocan', 'Resat', '041985550627', '22222222J', '+33993231387', 'Carretera', 'Basetnasci sutnu', 10, 0, null, 'Tumas', 03245,0);
 INSERT INTO metges VALUES(false, 'Bergasso', 'Grande', 'Pill', '281234567840', '05413374W', '+34969491580',0, 1500, '0123456789', 'Carrer', 'Atlanta', 2, 3, 'C', 'Sabadell', 03245);

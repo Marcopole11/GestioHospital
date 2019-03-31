@@ -153,11 +153,11 @@ public class DAOPaciente {
 
     }
 
-    public static boolean creaPacient(Pacient pacient) throws SQLException {
+    public static boolean creaPacient(Pacient pacient, int iex) throws SQLException {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
-        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, portaciutat, codiPostal,codiHistorial)"
-                + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, porta,ciutat, codiPostal,codiHistorial)"
+                + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
         states.setBoolean(1, pacient.getCasaOBloque());
@@ -174,6 +174,7 @@ public class DAOPaciente {
         states.setString(12, pacient.getAdreca().getPorta());
         states.setString(13, pacient.getAdreca().getCiutat());
         states.setLong(14, pacient.getAdreca().getCodiPostal());
+        states.setInt(15,iex);
         states.executeUpdate();
         return true;
     }
