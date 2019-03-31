@@ -19,19 +19,18 @@ import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
  */
 public class DAOVisita {
 
-    public static ResultSet getVisitaResultSet() {
+    public static ResultSet getVisitaResultSet() throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES ORDER BY fecha DESC;");
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+           throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet getVisitaNifRS(String dni) {
+    public static ResultSet getVisitaNifRS(String dni) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = ?;");
@@ -39,12 +38,11 @@ public class DAOVisita {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+          throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet getVisitaIEXResultSet(int codiHistorial) {
+    public static ResultSet getVisitaIEXResultSet(int codiHistorial) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM VISITES WHERE dniPacient = (SELECT codiHistorial FROM PACIENTS WHERE codiHistorial = ?);");
@@ -52,8 +50,7 @@ public class DAOVisita {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
@@ -66,15 +63,14 @@ public class DAOVisita {
                     + " VALUES (?,?,?,?)";
             states = join.prepareStatement(consulta);
             states.setString(1, visita.getData().format(DateTimeFormatter.ofPattern("uuuu-MM-d HH:mm:ss")));
-            // states.setInt(2, visita.getMalaltia().getCodi());
-            // states.setString(3, visita.getMetge().getNif());
-            // states.setString(4, visita.getDni());
+            states.setInt(2, visita.getDiagnostic().getCodi());
+            states.setString(3, visita.getMetge());
+            states.setString(4, visita.getDni());
             states.executeUpdate();
             return true;
 
         } catch (NullPointerException ex) {
-            System.out.println("ERROR NULL OBJ VISITA: " + ex.getMessage());
-            return false;
+           throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 }

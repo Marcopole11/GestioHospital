@@ -55,7 +55,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE nifPacient = ?";
+            String csql = "SELECT * FROM PACIENTS WHERE nifPac = ?";
             states = join.prepareStatement(csql);
             states.setString(1, nif);
             states.executeQuery();
@@ -70,7 +70,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE numSegSoc = ?";
+            String csql = "SELECT * FROM PACIENTS WHERE numSegSocialPac = ?";
             states = join.prepareStatement(csql);
             states.setString(1, nss);
             states.executeQuery();
@@ -85,7 +85,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE codiHistorial = ?";
+            String csql = "SELECT * FROM PACIENTS WHERE iexPac = ?";
             states = join.prepareStatement(csql);
             states.setInt(1, codiHist);
             states.executeQuery();
@@ -157,7 +157,7 @@ public class DAOPaciente {
     public static boolean creaPacient(Pacient pacient, int iex) throws Exception {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
-        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, porta,ciutat, codiPostal,codiHistorial)"
+        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, porta,ciutat, codiPostal,iexPac)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
