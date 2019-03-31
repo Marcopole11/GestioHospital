@@ -74,9 +74,10 @@ create table visites(
     orden Int,
     PRIMARY KEY(codi),
 FOREIGN KEY (codiMalaltia) REFERENCES malalties(codi),
-    FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac),
+FOREIGN KEY (nomMet) REFERENCES METGES(nomMet),
+    FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac)
     
-    FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
+    
 );
 
 
