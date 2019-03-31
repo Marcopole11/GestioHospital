@@ -11,7 +11,7 @@ package m03.uf5.p01.grup5.gestioHospital.model;
  * @author Marc Cardenas, Raul Barrero, Roger Miralles
  */
 public abstract class Persona {
-
+    
     public String nom, cognom1, cognom2, numSegSocial, nif, telefon;
     public Adreca adreca;
     boolean cOb;

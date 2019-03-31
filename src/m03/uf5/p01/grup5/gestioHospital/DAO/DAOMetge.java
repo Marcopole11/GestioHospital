@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package m03.uf5.p01.grup5.gestiohospital.DAO;
 
 import java.sql.CallableStatement;
@@ -12,23 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
 import m03.uf5.p01.grup5.gestioHospital.model.Metge;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
 public class DAOMetge {
 
-    public static ResultSet MetgesResultat() {
+    public static ResultSet MetgesResultat() throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM metges;");
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR" + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error al conectar la Base de datos: " + ex.getMessage()));
         }
     }
 
@@ -45,12 +36,11 @@ public class DAOMetge {
             return malalt;
 
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error al conectar la Base de datos: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet DniMetgeResultat(String dni) {
+    public static ResultSet DniMetgeResultat(String dni) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM metges WHERE nifMet = ?;");
@@ -58,12 +48,11 @@ public class DAOMetge {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-   /*
+    /*
     public static Metge DniMetge(String dni) {
         try {
             ResultSet resultat = DniMetgeResultat(dni);
@@ -74,9 +63,8 @@ public class DAOMetge {
             return null;
         }
     }
-    */
-
-    private static Metge newMetgeO(ResultSet resultat) throws Exception{
+     */
+    private static Metge newMetgeO(ResultSet resultat) throws Exception {
         try {
             boolean COB = resultat.getBoolean("casaObloqueMet");
             int numEmpleatMet = resultat.getInt("numEmpleatMet");
@@ -96,14 +84,14 @@ public class DAOMetge {
             int plantaMet = resultat.getInt("plantaMet");
             String portaMet = resultat.getString("portaMet");
 
-           return new Metge(COB,nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet);
+            return new Metge(COB, nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet, salariMensualMet, codiCompteCorrentMet, tipoMet, carrerMet, numeroMet, plantaMet, portaMet, ciutatMet, codiPostalMet);
         } catch (SQLException ex) {
-            throw(new Exception("Se ha perdido el acceso a la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al crear el metge en la Base de datos" + ex.getMessage()));
         }
 
     }
 
-    public static ResultSet cssMetge(String css) {
+    public static ResultSet cssMetge(String css) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM metges WHERE numSegSocialMet = ?;");
@@ -111,15 +99,14 @@ public class DAOMetge {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error al crear el metge en la Base de datos" + ex.getMessage()));
         }
     }
 
-    public static boolean updateMetge(Metge metge) throws Exception {
+    /*public static boolean updateMetge(Metge metge) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
-            CallableStatement states = join.prepareCall("{call actualizaMetge(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}"); // revisa
+            CallableStatement states = join.prepareCall("{call actualizaMetge(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
             states.setInt(1, metge.getNumEmpleat());
             states.setString(2, metge.getNom());
             states.setString(3, metge.getCognom1());
@@ -131,41 +118,42 @@ public class DAOMetge {
             states.setString(9, metge.getAdreca().getCiutat());
             states.setLong(10, metge.getAdreca().getCodiPostal());
             states.setInt(11, metge.getAdreca().getNumero());
-            states.setString(12, metge.getAdreca().getPlanta()+"");
+            states.setString(12, metge.getAdreca().getPlanta() + "");
             states.setString(13, metge.getAdreca().getPorta());
             states.execute();
             return true;
         } catch (SQLException ex) {
-            throw(new Exception("Hubo un error al actlualizar el médico en la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al actlualizar el médico en la Base de datos: " + ex.getMessage()));
         }
-    }
-
-    public static boolean newMetge(Metge metge) throws Exception{
+    }*/
+    public static boolean newMetge(Metge metge) throws Exception {
         Connection join = ConexionDB.contectar();
         PreparedStatement states;
         try {
             states = join.prepareStatement("INSERT INTO metges "
-                    + "(nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, ciutatMet, codiPostalMet, carrerMet, numeroMet, plantaMet, portaMet, numEmpleatMet, salariMensualMet, codiCompteCorrentMet) "
-                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            states.setString(1, metge.getNom());
-            states.setString(2, metge.getCognom1());
-            states.setString(3, metge.getCognom2());
-            states.setString(4, metge.getNumSegSocial());
-            states.setString(5, metge.getNif());
-            states.setString(6, metge.getTelefon());
-            states.setString(7, metge.getAdreca().getCiutat());
-            states.setLong(8, metge.getAdreca().getCodiPostal());
-            states.setString(9, metge.getAdreca().getCarrer());
-            states.setInt(10, metge.getAdreca().getNumero());
-            states.setString(11, metge.getAdreca().getPlanta()+"");
-            states.setString(12, metge.getAdreca().getPorta());
-            states.setInt(13, metge.getNumEmpleat());
-            states.setInt(14, metge.getSalariMensual());
-            states.setString(15, metge.getCodiCompteCorrent());
+                    + "(casaObloqueMet,nomMetge,primerCognomMet,segonCognomMet,numSegSocialMet,nifMet,telMet,numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet)"
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            states.setBoolean(1, metge.getCasaOBloque());
+            states.setString(2, metge.getNom());
+            states.setString(3, metge.getCognom1());
+            states.setString(4, metge.getCognom2());
+            states.setString(5, metge.getNumSegSocial());
+            states.setString(6, metge.getNif());
+            states.setString(7, metge.getTelefon());
+            states.setInt(8, metge.getNumEmpleat());
+            states.setInt(9, metge.getSalariMensual());
+            states.setString(10, metge.getCodiCompteCorrent());
+            states.setString(11, metge.getAdreca().getTipo());
+            states.setString(12, metge.getAdreca().getCarrer());
+            states.setInt(13, metge.getAdreca().getNumero());
+            states.setInt(14, metge.getAdreca().getPlanta());
+            states.setString(15, metge.getAdreca().getPorta());
+            states.setString(16, metge.getAdreca().getCiutat());
+            states.setLong(17, metge.getAdreca().getCodiPostal());
             states.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            throw(new Exception("Hubo un error al registrar el médico en la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al registrar el médico en la Base de datos: " + ex.getMessage()));
         }
     }
 }

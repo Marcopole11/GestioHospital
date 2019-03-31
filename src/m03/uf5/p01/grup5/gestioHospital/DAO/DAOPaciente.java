@@ -23,15 +23,14 @@ import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
 public class DAOPaciente {
 
-    public static ResultSet getPacientsResultSet() {
+    public static ResultSet getPacientsResultSet()  throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = join.prepareStatement("SELECT * FROM PACIENTS;");
             states.executeQuery();
             return states.getResultSet();
-        } catch (Exception e) {
-            System.out.println("ERROR EN SQL:" + e.getMessage());
-            return null;
+        } catch (Exception ex) {
+            throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
@@ -46,12 +45,11 @@ public class DAOPaciente {
             return llistaPacients;
 
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+             throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet pacientNifResult(String nif) {
+    public static ResultSet pacientNifResult(String nif) throws Exception  {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -61,12 +59,11 @@ public class DAOPaciente {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+             throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet pacientNSS(String nss) {
+    public static ResultSet pacientNSS(String nss)  throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -76,12 +73,11 @@ public class DAOPaciente {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+             throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet pacientIEX(int codiHist) {
+    public static ResultSet pacientIEX(int codiHist)  throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
@@ -91,8 +87,7 @@ public class DAOPaciente {
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
     }
 ////public static Pacient getPacientNif(String DNI) throws Exception {
@@ -106,7 +101,7 @@ public class DAOPaciente {
 ////        }
 ////    }
 
-    public static boolean modificarPacient(Pacient pacient) {
+    /*public static boolean modificarPacient(Pacient pacient) throws Exception  {
         try {
             Connection join = ConexionDB.contectar();
             CallableStatement states = null;
@@ -129,26 +124,25 @@ public class DAOPaciente {
             states.execute();
             return true;
         } catch (SQLException ex) {
-            System.out.println("ERROR EN SQL: " + ex.getMessage());
-            return false;
+             throw (new Exception("Hubo un error: " + ex.getMessage()));
         }
-    }
+    }*/
 
-    private static Pacient creaPAcientO(ResultSet rs, int numeroH) throws Exception {
-        String nifPacient = rs.getString("nifPacient");        
-        String nomPacient = rs.getString("nomPacient");
-        String cognom1Pacient = rs.getString("cognom1Pacient");
-        String cognom2Pacient = rs.getString("cognom2Pacient");
-        String numSegSoc = rs.getString("numSegSoc");
-        String telefon = rs.getString("telefon");
-        String ciutat = rs.getString("ciutat");
-        int codiPostal = rs.getInt("codiPostal");
-        boolean casaObloque = rs.getBoolean("casaObloque");
-        String tipo = rs.getString("tipo");
-        String carrer = rs.getString("carrer");
-        int numero = rs.getInt("numero");
-        int planta = rs.getInt("planta");
-        String porta = rs.getString("porta");
+    private static Pacient creaPAcientO(ResultSet resultat, int numeroH) throws Exception {
+        String nifPacient = resultat.getString("nifPacient");        
+        String nomPacient = resultat.getString("nomPacient");
+        String cognom1Pacient = resultat.getString("cognom1Pacient");
+        String cognom2Pacient = resultat.getString("cognom2Pacient");
+        String numSegSoc = resultat.getString("numSegSoc");
+        String telefon = resultat.getString("telefon");
+        String ciutat = resultat.getString("ciutat");
+        int codiPostal = resultat.getInt("codiPostal");
+        boolean casaObloque = resultat.getBoolean("casaObloque");
+        String tipo = resultat.getString("tipo");
+        String carrer = resultat.getString("carrer");
+        int numero = resultat.getInt("numero");
+        int planta = resultat.getInt("planta");
+        String porta = resultat.getString("porta");
 
         return new Pacient(casaObloque, nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, tipo, carrer, numero, planta, porta, ciutat, codiPostal, numeroH);
 
