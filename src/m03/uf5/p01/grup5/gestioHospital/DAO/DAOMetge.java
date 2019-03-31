@@ -22,7 +22,7 @@ public class DAOMetge {
     public static ResultSet MetgesResultat() {
         try {
             Connection join = ConexionDB.contectar();
-            PreparedStatement states = join.prepareStatement("SELECT * FROM metges;"); //REVISAR
+            PreparedStatement states = join.prepareStatement("SELECT * FROM metges;");
             states.executeQuery();
             return states.getResultSet();
         } catch (SQLException ex) {
@@ -31,7 +31,7 @@ public class DAOMetge {
         }
     }
 
-    public static Metge[] Metges() {
+    public static Metge[] Metges() throws Exception {
         try {
             ArrayList<Metge> malalt = new ArrayList<>();
 
@@ -62,6 +62,7 @@ public class DAOMetge {
         }
     }
 
+   /*
     public static Metge DniMetge(String dni) {
         try {
             ResultSet resultat = DniMetgeResultat(dni);
@@ -72,8 +73,11 @@ public class DAOMetge {
             return null;
         }
     }
+    */
 
-    private static Metge newMetgeO(ResultSet resultat) throws SQLException {
+    private static Metge newMetgeO(ResultSet resultat) throws Exception {
+        
+        boolean COB = resultat.getBoolean("casaObloqueMet");
         int numEmpleatMet = resultat.getInt("numEmpleatMet");
         String nifMet = resultat.getString("nifMet");
         String nomMetge = resultat.getString("nomMetge");
@@ -84,15 +88,16 @@ public class DAOMetge {
         int salariMensualMet = resultat.getInt("salariMensualMet");
         String codiCompteCorrentMet = resultat.getString("codiCompteCorrentMet");
         String ciutatMet = resultat.getString("ciutatMet");
-        long codiPostalMet = resultat.getLong("codiPostalMet");
+        String tipoMet = resultat.getString("tipoMet");
+        int codiPostalMet = resultat.getInt("codiPostalMet");
         String carrerMet = resultat.getString("carrerMet");
         int numeroMet = resultat.getInt("numeroMet");
-        String plantaMet = resultat.getString("plantaMet");
+        int plantaMet = resultat.getInt("plantaMet");
         String portaMet = resultat.getString("portaMet");
 
-        //Adreca adreca = new Adreca(ciutat, codiPostal, carrer, numero, planta, porta);
-       // return new Metge(nomMetge, cognom1Metge, cognom2Metge, numSegSoc, nifMetge, telefon, adreca, numEmpleat, salariMensual, codiCompte);
-       return null;
+       return new Metge(COB,nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet);
+
+
     }
 
     public static ResultSet cssMetge(String css) {
