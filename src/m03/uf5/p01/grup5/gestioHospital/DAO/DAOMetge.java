@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
@@ -31,7 +32,7 @@ public class DAOMetge {
         }
     }
 
-    public static Metge[] Metges() throws Exception {
+    public static List<Metge> Metges() throws Exception {
         try {
             ArrayList<Metge> malalt = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class DAOMetge {
                 malalt.add(newMetgeO(resultat));
             }
             Metge[] masMalaltias = new Metge[malalt.size()];
-            return malalt.toArray(masMalaltias);
+            return malalt;
 
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
