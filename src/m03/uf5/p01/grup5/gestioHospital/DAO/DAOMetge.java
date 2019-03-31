@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.Adreca;
@@ -31,7 +32,7 @@ public class DAOMetge {
         }
     }
 
-    public static Metge[] Metges() throws Exception {
+    public static List<Metge> Metges() throws Exception {
         try {
             ArrayList<Metge> malalt = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class DAOMetge {
                 malalt.add(newMetgeO(resultat));
             }
             Metge[] masMalaltias = new Metge[malalt.size()];
-            return malalt.toArray(masMalaltias);
+            return malalt;
 
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());
@@ -75,28 +76,30 @@ public class DAOMetge {
     }
     */
 
-    private static Metge newMetgeO(ResultSet resultat) throws Exception {
-        
-        boolean COB = resultat.getBoolean("casaObloqueMet");
-        int numEmpleatMet = resultat.getInt("numEmpleatMet");
-        String nifMet = resultat.getString("nifMet");
-        String nomMetge = resultat.getString("nomMetge");
-        String primerCognomMet = resultat.getString("primerCognomMet");
-        String segonCognomMet = resultat.getString("segonCognomMet");
-        String numSegSocialMet = resultat.getString("numSegSocialMet");
-        String telMet = resultat.getString("telMet");
-        int salariMensualMet = resultat.getInt("salariMensualMet");
-        String codiCompteCorrentMet = resultat.getString("codiCompteCorrentMet");
-        String ciutatMet = resultat.getString("ciutatMet");
-        String tipoMet = resultat.getString("tipoMet");
-        int codiPostalMet = resultat.getInt("codiPostalMet");
-        String carrerMet = resultat.getString("carrerMet");
-        int numeroMet = resultat.getInt("numeroMet");
-        int plantaMet = resultat.getInt("plantaMet");
-        String portaMet = resultat.getString("portaMet");
+    private static Metge newMetgeO(ResultSet resultat) throws Exception{
+        try {
+            boolean COB = resultat.getBoolean("casaObloqueMet");
+            int numEmpleatMet = resultat.getInt("numEmpleatMet");
+            String nifMet = resultat.getString("nifMet");
+            String nomMetge = resultat.getString("nomMetge");
+            String primerCognomMet = resultat.getString("primerCognomMet");
+            String segonCognomMet = resultat.getString("segonCognomMet");
+            String numSegSocialMet = resultat.getString("numSegSocialMet");
+            String telMet = resultat.getString("telMet");
+            int salariMensualMet = resultat.getInt("salariMensualMet");
+            String codiCompteCorrentMet = resultat.getString("codiCompteCorrentMet");
+            String ciutatMet = resultat.getString("ciutatMet");
+            String tipoMet = resultat.getString("tipoMet");
+            int codiPostalMet = resultat.getInt("codiPostalMet");
+            String carrerMet = resultat.getString("carrerMet");
+            int numeroMet = resultat.getInt("numeroMet");
+            int plantaMet = resultat.getInt("plantaMet");
+            String portaMet = resultat.getString("portaMet");
 
-       return new Metge(COB,nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet);
-
+           return new Metge(COB,nomMetge, primerCognomMet, segonCognomMet, numSegSocialMet, nifMet, telMet, numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet);
+        } catch (SQLException ex) {
+            throw(new Exception("Se ha perdido el acceso a la Base de datos: "+ex.getMessage()));
+        }
 
     }
 
