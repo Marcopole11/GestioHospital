@@ -59,7 +59,7 @@ create table visites(
     codi INT auto_increment,
     fecha DATETIME,
     codiMalaltia INT,
-    nomMet CHAR(9),
+    nomMet VARCHAR(15),
     nifPac VARCHAR(9),
     orden Int,
     PRIMARY KEY(codi),
@@ -77,6 +77,17 @@ create table malalties(
     PRIMARY KEY(codi)
 );
 
+create table adreca(
+    idAdreca INT auto_increment,
+    tipo VARCHAR(15),
+    carrer VARCHAR(60),
+    numero INT,
+    planta INT,
+    porta VARCHAR(10),
+    ciutat VARCHAR(30),
+    codiPostal int,
+    PRIMARY KEY(idAdreca)
+);
 
 DROP FUNCTION IF EXISTS aPacient;
 DELIMITER // 
@@ -165,3 +176,4 @@ INSERT INTO pacients VALUES(true, 'Cubi', 'Lemocan', 'Resat', '041985550627', '2
 INSERT INTO metges VALUES(false, 'Bergasso', 'Grande', 'Pill', '281234567840', '05413374W', '+34969491580',0, 1500, '0123456789', 'Carrer', 'Atlanta', 2, 3, 'C', 'Sabadell', 03245);
 INSERT INTO visites VALUES();
 INSERT INTO malalties VALUES(0,'refredat', 'Caldo de pollo\nBisolgrip\nBivaporux', false, 8);
+INSERT INTO adreca VALUES("Avenida", "Atlanta", 32,0,null, "Barcelona", 03245);
