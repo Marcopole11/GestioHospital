@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import m03.uf5.p01.grup5.gestioHospital.model.Malaltia;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
@@ -26,7 +27,7 @@ public class DAOMalaltia {
         }
     }
 
-    public static Malaltia[] Malaltias() {
+    public static List<Malaltia> MalaltiasIN() {
         try {
 
             ArrayList<Malaltia> malalt = new ArrayList<>();
@@ -38,7 +39,7 @@ public class DAOMalaltia {
             }
 
             Malaltia[] masMalaltias = new Malaltia[malalt.size()];
-            return malalt.toArray(masMalaltias);
+            return malalt;
 
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex.getMessage());

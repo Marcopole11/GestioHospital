@@ -112,10 +112,8 @@ public class ControlHospital {
     }
 
     public boolean guardarSession() {
+        
         try {
-            /*elObjeto.nouPacient(true, "David", "Phil", "Jesus", "248896023079", "27451527S", "+34 968 39 42 56", "C/", "Test", 6, 0, null, "Terrasa", 03245);
-            elObjeto.pacients.get(0).historial.visites.visitar(1, 1,1, 3.2, elObjeto.metges.get(0), elObjeto.malalties.get(0));
-            System.out.println(elObjeto.pacients.get(0));*/
             File Registro = new File(ruta + "\\adreca.csv");
             FileWriter fichero;
             fichero = new FileWriter(Registro, false);
