@@ -131,7 +131,7 @@ public class DAOMetge {
         PreparedStatement states;
         try {
             states = join.prepareStatement("INSERT INTO metges "
-                    + "(casaObloqueMet,nomMetge,primerCognomMet,segonCognomMet,numSegSocialMet,nifMet,telMet,numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet)"
+                    + "(casaObloqueMet,nomMet,primerCognomMet,segonCognomMet,numSegSocialMet,nifMet,telMet,numEmpleatMet,salariMensualMet,codiCompteCorrentMet,tipoMet,carrerMet,numeroMet,plantaMet,portaMet,ciutatMet,codiPostalMet)"
                     + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
             states.setBoolean(1, metge.getCasaOBloque());
             states.setString(2, metge.getNom());

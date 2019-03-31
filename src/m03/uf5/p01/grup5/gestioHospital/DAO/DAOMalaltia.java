@@ -34,7 +34,7 @@ public class DAOMalaltia {
             ResultSet resultat = MalaltiasResultat();
 
             while (resultat.next()) {
-                malalt.add(newMalaltiaO(resultat));
+                malalt.add(newMalaltiaO(resultat,malalt.size()));
             }
 
             Malaltia[] masMalaltias = new Malaltia[malalt.size()];
@@ -112,9 +112,9 @@ public class DAOMalaltia {
         }
     }
 
-    private static Malaltia newMalaltiaO(ResultSet resultat) throws Exception {
+    private static Malaltia newMalaltiaO(ResultSet resultat,int codi) throws Exception {
         try {
-            int codi = resultat.getInt("codi");
+            //int codi = resultat.getInt("codi");
             String nom = resultat.getString("nom");
             boolean causabaixa = resultat.getBoolean("causaBaixa");
             String tractament = resultat.getString("tractament");
