@@ -18,11 +18,11 @@ public class vista {
     
     
     public static void main(String[] args){
-        try { // peta aqui
+        try {
             Ventana.menuPrincipal.abrir(new ControlHospital());
-           // principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
+            //principal.dispatchEvent(new WindowEvent(principal, WindowEvent.WINDOW_CLOSING));
         } catch (Exception ex) {
-            System.out.println("No se ha podido cargar el programa: Con el error: "+ex.getMessage());
+            System.out.println("No se ha podido cargar el programa: "+ex.getMessage());
         }
     }
     
