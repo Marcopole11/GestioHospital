@@ -60,10 +60,10 @@ create table visites(
     fecha DATETIME,
     codiMalaltia INT,
     nomMet CHAR(9),
- nifPac VARCHAR(9),
-orden Int,
+    nifPac VARCHAR(9),
+    orden Int,
     PRIMARY KEY(codi),
- FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac),
+    FOREIGN KEY (nifPac) REFERENCES Pacients(nifPac),
     FOREIGN KEY (codiMalaltia) REFERENCES MALALTIES(codiMalaltia),
     FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
 );
