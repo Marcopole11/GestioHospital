@@ -56,6 +56,15 @@ casaObloqueMet BOOLEAN,
     PRIMARY KEY(nifMet)
 );
 
+create table malalties(
+    codi int,
+    nom VARCHAR(15),
+    tractament VARCHAR(80), 
+    causaBaixa boolean, 
+    duradaTractament INT(14),
+    PRIMARY KEY(codi)
+);
+
 create table visites(
     codi INT auto_increment,
     fecha DATETIME,
@@ -69,14 +78,7 @@ create table visites(
     FOREIGN KEY (nomMet) REFERENCES METGES(nomMet)
 );
 
-create table malalties(
-    codi int,
-    nom VARCHAR(15),
-    tractament VARCHAR(80), 
-    causaBaixa boolean, 
-    duradaTractament INT(14),
-    PRIMARY KEY(codi)
-);
+
 
 create table adreca(
     idAdreca INT auto_increment,
