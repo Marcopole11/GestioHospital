@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import m03.uf5.p01.grup5.gestioHospital.DAO.DAOAdreca;
 import m03.uf5.p01.grup5.gestioHospital.DAO.DAOPaciente;
 import m03.uf5.p01.grup5.gestioHospital.model.*;
 import m03.uf5.p01.grup5.gestioHospital.vista.Ventana;
@@ -39,7 +40,7 @@ public class ControlHospital {
 
     public ControlHospital() throws Exception {
         List<Adreca> adrecas = new ArrayList<Adreca>();
-        elObjeto = new Hospital(/*TODO*/);
+        elObjeto = new Hospital(DAOAdreca.getAdreca().get(0));
         elObjeto.malalties = DAOMalaltia.MalaltiasIN();
         elObjeto.metges = DAOMetge.Metges();
         elObjeto.pacients = DAOPaciente.getPacients();
