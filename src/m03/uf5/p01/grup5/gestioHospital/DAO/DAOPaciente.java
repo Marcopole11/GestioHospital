@@ -26,7 +26,7 @@ public class DAOPaciente {
     public static ResultSet getPacientsResultSet()  throws Exception {
         try {
             Connection join = ConexionDB.contectar();
-            PreparedStatement states = join.prepareStatement("SELECT * FROM PACIENTS;");
+            PreparedStatement states = join.prepareStatement("SELECT * FROM pacients;");
             states.executeQuery();
             return states.getResultSet();
         } catch (Exception ex) {
@@ -53,7 +53,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE nifPac = ?";
+            String csql = "SELECT * FROM pacients WHERE nifPac = ?";
             states = join.prepareStatement(csql);
             states.setString(1, nif);
             states.executeQuery();
@@ -67,7 +67,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE numSegSocialPac = ?";
+            String csql = "SELECT * FROM pacients WHERE numSegSocialPac = ?";
             states = join.prepareStatement(csql);
             states.setString(1, nss);
             states.executeQuery();
@@ -81,7 +81,7 @@ public class DAOPaciente {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
-            String csql = "SELECT * FROM PACIENTS WHERE iexPac = ?";
+            String csql = "SELECT * FROM pacients WHERE iexPac = ?";
             states = join.prepareStatement(csql);
             states.setInt(1, codiHist);
             states.executeQuery();
@@ -129,20 +129,20 @@ public class DAOPaciente {
     }*/
 
     private static Pacient creaPAcientO(ResultSet resultat, int numeroH) throws Exception {
-        String nifPacient = resultat.getString("nifPacient");        
-        String nomPacient = resultat.getString("nomPacient");
-        String cognom1Pacient = resultat.getString("cognom1Pacient");
-        String cognom2Pacient = resultat.getString("cognom2Pacient");
-        String numSegSoc = resultat.getString("numSegSoc");
-        String telefon = resultat.getString("telefon");
-        String ciutat = resultat.getString("ciutat");
-        int codiPostal = resultat.getInt("codiPostal");
-        boolean casaObloque = resultat.getBoolean("casaObloque");
-        String tipo = resultat.getString("tipo");
-        String carrer = resultat.getString("carrer");
-        int numero = resultat.getInt("numero");
-        int planta = resultat.getInt("planta");
-        String porta = resultat.getString("porta");
+        String nifPacient = resultat.getString("nifPac");        
+        String nomPacient = resultat.getString("nomPac");
+        String cognom1Pacient = resultat.getString("primerCognomPac");
+        String cognom2Pacient = resultat.getString("segonCognomPac");
+        String numSegSoc = resultat.getString("numSegSocialPac");
+        String telefon = resultat.getString("telPac");
+        String ciutat = resultat.getString("ciutatPac");
+        int codiPostal = resultat.getInt("codiPostalPac");
+        boolean casaObloque = resultat.getBoolean("casaObloquePac");
+        String tipo = resultat.getString("tipoPac");
+        String carrer = resultat.getString("carrerPac");
+        int numero = resultat.getInt("numeroPac");
+        int planta = resultat.getInt("plantaPac");
+        String porta = resultat.getString("portaPac");
 
         return new Pacient(casaObloque, nomPacient, cognom1Pacient, cognom2Pacient, numSegSoc, nifPacient, telefon, tipo, carrer, numero, planta, porta, ciutat, codiPostal, numeroH);
 
@@ -151,7 +151,7 @@ public class DAOPaciente {
     public static boolean creaPacient(Pacient pacient, int iex) throws Exception {
         Connection join = ConexionDB.contectar();
         PreparedStatement states = null;
-        String consulta = "INSERT INTO PACIENTS (casaObloque, nomPacient, cognom1Pacient, cognom2Pacient,numSegSoc,nifPacient, telefon,tipo, carrer, numero, planta, porta,ciutat, codiPostal,iexPac)"
+        String consulta = "INSERT INTO pacients (casaObloquePac,nomPac,primerCognomPac,segonCognomPac,numSegSocialPac,nifPac,telPac,tipoPac,carrerPac,numeroPac,plantaPac,portaPac,ciutatPac,codiPostalPac,iexPac)"
                 + " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         states = join.prepareStatement(consulta);
