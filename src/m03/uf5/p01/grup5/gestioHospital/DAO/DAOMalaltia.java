@@ -7,25 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import m03.uf5.p01.grup5.gestioHospital.model.Malaltia;
 import m03.uf5.p01.grup5.gestioHospital.utils.ConexionDB;
 
 public class DAOMalaltia {
 
-    public static ResultSet MalaltiasResultat() {
+    public static ResultSet MalaltiasResultat() throws Exception {
         try {
             Connection join = ConexionDB.contectar();
 
-            PreparedStatement states = join.prepareStatement("SELECT * FROM malalties;"); // REVISAR
+            PreparedStatement states = join.prepareStatement("SELECT * FROM malalties;");
             states.executeQuery();
 
             return states.getResultSet();
 
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error al conectar la Base de datos: " + ex.getMessage()));
         }
     }
 
@@ -44,24 +41,22 @@ public class DAOMalaltia {
             return malalt;
 
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error al actualizar en la Base de datos: " + ex.getMessage()));
         }
     }
 
-    public static ResultSet CodiMalaltiaResultat(int codi) {
+    public static ResultSet CodiMalaltiaResultat(int codi) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
 
-            PreparedStatement states = join.prepareStatement("SELECT * FROM malalties WHERE codi = ?;"); // REVISAR
+            PreparedStatement states = join.prepareStatement("SELECT * FROM malalties WHERE codi = ?;");
             states.setInt(1, codi);
             states.executeQuery();
 
             return states.getResultSet();
 
         } catch (SQLException ex) {
-            System.out.println("ERROR: " + ex.getMessage());
-            return null;
+            throw (new Exception("Hubo un error con la Base de datos: " + ex.getMessage()));
         }
     }
 
@@ -76,13 +71,12 @@ public class DAOMalaltia {
 //            return null;
 //        }
 //    }
-
     public static boolean updateMalaltia(Malaltia malaltia) throws Exception {
         try {
 
             Connection join = ConexionDB.contectar();
 
-            CallableStatement state = join.prepareCall("{call Malaltia(?, ?, ?, ?, ?)}"); // REVISAR
+            CallableStatement state = join.prepareCall("{call malalties(?, ?, ?, ?, ?)}");
 
             state.setInt(1, malaltia.getCodi());
             state.setString(2, malaltia.getNom());
@@ -93,16 +87,16 @@ public class DAOMalaltia {
 
             return true;
         } catch (SQLException ex) {
-            throw(new Exception("Hubo un error al actualizar la Malaltia en la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al actualizar la Malaltia en la Base de datos: " + ex.getMessage()));
         }
     }
 
-    public static boolean newMalaltia(Malaltia malaltia) throws Exception{
+    public static boolean newMalaltia(Malaltia malaltia) throws Exception {
         try {
             Connection join = ConexionDB.contectar();
             PreparedStatement states = null;
 
-            String state = "INSERT INTO malalties VALUES(?,?,?,?,?)"; // REVISAR
+            String state = "INSERT INTO malalties VALUES(?,?,?,?,?)";
 
             states = join.prepareStatement(state);
             states.setInt(1, malaltia.getCodi());
@@ -113,21 +107,21 @@ public class DAOMalaltia {
             states.executeUpdate();
             return true;
         } catch (SQLException ex) {
-            throw(new Exception("Hubo un error al registrar la Malaltia en la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al crear la Malaltia en la Base de datos: " + ex.getMessage()));
         }
     }
 
-    private static Malaltia newMalaltiaO(ResultSet resultat) throws Exception{
+    private static Malaltia newMalaltiaO(ResultSet resultat) throws Exception {
         try {
-            int codi = resultat.getInt("codiMalaltia");
-            String nom = resultat.getString("nomMalaltia");
-            boolean causabaixa = resultat.getString("causaBaixa").toLowerCase().equals("si");
+            int codi = resultat.getInt("codi");
+            String nom = resultat.getString("nom");
+            boolean causabaixa = resultat.getBoolean("causaBaixa");
             String tractament = resultat.getString("tractament");
-            long durac = resultat.getInt("duracio");
+            long durac = resultat.getInt("duradaTractament");
 
             return new Malaltia(codi, nom, tractament, causabaixa, durac);
         } catch (SQLException ex) {
-            throw(new Exception("Se ha perdido el acceso a la Base de datos: "+ex.getMessage()));
+            throw (new Exception("Hubo un error al crear la Malaltia en la Base de datos: " + ex.getMessage()));
         }
     }
 }
