@@ -23,6 +23,7 @@ import m03.uf5.p01.grup5.gestioHospital.model.*;
 import m03.uf5.p01.grup5.gestioHospital.vista.Ventana;
 import m03.uf5.p01.grup5.gestioHospital.vista.vista;
 import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMalaltia;
+import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMetge;
 
 /**
  *
@@ -114,50 +115,51 @@ public class ControlHospital {
     }
 
     public boolean guardarSession() {
-        
-        try {
-            File Registro = new File(ruta + "\\adreca.csv");
-            FileWriter fichero;
-            fichero = new FileWriter(Registro, false);
-            PrintWriter pw = new PrintWriter(fichero);
-            pw.println(formatCSV(elObjeto.adreca.CSV()));
-            pw.println(elObjeto.adreca.toCSV());
-            pw.close();
-            fichero.close();
-            Registro = new File(ruta + "\\metges.csv");
-            fichero = new FileWriter(Registro, false);
-            pw = new PrintWriter(fichero);
-            pw.println(formatCSV(Metge.CSV()));
-            for (Metge cada : elObjeto.metges) {
-                pw.println(cada.toCSV(addDireccion(cada.adreca)));
-            }
-            pw.close();
-            fichero.close();
-            Registro = new File(ruta + "\\malaltia.csv");
-            fichero = new FileWriter(Registro, false);
-            pw = new PrintWriter(fichero);
-            pw.println(formatCSV(Malaltia.CSV()));
-            for (Malaltia cada : elObjeto.malalties) {
-                pw.println(cada.toCSV());
-            }
-            pw.close();
-            fichero.close();
-            Registro = new File(ruta + "\\pacients.csv");
-            fichero = new FileWriter(Registro, false);
-            pw = new PrintWriter(fichero);
-            pw.println(formatCSV(Pacient.CSV()));
-            for (Pacient cada : elObjeto.pacients) {
-                //////// PROBLEMA DETECTADO //////////////
-                pw.println(cada.toCSV(addDireccion(cada.adreca)));
-                
-            }
-            pw.close();
-            fichero.close();
-            return true;
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return false;
-        }
+        ////YA NO GUARDAMOS EN LOCAL
+//        try {
+//            File Registro = new File(ruta + "\\adreca.csv");
+//            FileWriter fichero;
+//            fichero = new FileWriter(Registro, false);
+//            PrintWriter pw = new PrintWriter(fichero);
+//            pw.println(formatCSV(elObjeto.adreca.CSV()));
+//            pw.println(elObjeto.adreca.toCSV());
+//            pw.close();
+//            fichero.close();
+//            Registro = new File(ruta + "\\metges.csv");
+//            fichero = new FileWriter(Registro, false);
+//            pw = new PrintWriter(fichero);
+//            pw.println(formatCSV(Metge.CSV()));
+//            for (Metge cada : elObjeto.metges) {
+//                pw.println(cada.toCSV(addDireccion(cada.adreca)));
+//            }
+//            pw.close();
+//            fichero.close();
+//            Registro = new File(ruta + "\\malaltia.csv");
+//            fichero = new FileWriter(Registro, false);
+//            pw = new PrintWriter(fichero);
+//            pw.println(formatCSV(Malaltia.CSV()));
+//            for (Malaltia cada : elObjeto.malalties) {
+//                pw.println(cada.toCSV());
+//            }
+//            pw.close();
+//            fichero.close();
+//            Registro = new File(ruta + "\\pacients.csv");
+//            fichero = new FileWriter(Registro, false);
+//            pw = new PrintWriter(fichero);
+//            pw.println(formatCSV(Pacient.CSV()));
+//            for (Pacient cada : elObjeto.pacients) {
+//                //////// PROBLEMA DETECTADO //////////////
+//                pw.println(cada.toCSV(addDireccion(cada.adreca)));
+//                
+//            }
+//            pw.close();
+//            fichero.close();
+//            return true;
+//        } catch (Exception ex) {
+//            System.out.println(ex.getMessage());
+//            return false;
+//        }
+        return true;
     }
 
     static String formatCSV(String[] asd) {
@@ -222,6 +224,7 @@ public class ControlHospital {
             casaObloque=false;
         }
         elObjeto.nouMetge(casaObloque, nom, primerCognom, segonCognom, numSegSocial, nif, tel, salariMensual, codiCompteCorrent, tipo, carrer, numero, planta, piso, ciudad, codiPostal);
+        DAOMetge.newMetge(elObjeto.metges.get(elObjeto.metges.size()-1));
     }
     
     public void comprobarNovaMalaltia(String Malal,String Motiu,String Descriu, String Durada) throws Exception{
