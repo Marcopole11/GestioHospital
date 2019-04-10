@@ -19,11 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import m03.uf5.p01.grup5.gestioHospital.DAO.DAOAdreca;
-import m03.uf5.p01.grup5.gestioHospital.DAO.DAOPaciente;
+import m03.uf5.p01.grup5.gestioHospital.dao.DAOAdreca;
+import m03.uf5.p01.grup5.gestioHospital.dao.DAOPaciente;
 import m03.uf5.p01.grup5.gestioHospital.model.*;
-import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMalaltia;
-import m03.uf5.p01.grup5.gestiohospital.DAO.DAOMetge;
+import m03.uf5.p01.grup5.gestioHospital.dao.DAOMalaltia;
+import m03.uf5.p01.grup5.gestioHospital.dao.DAOMetge;
 
 /**
  *
@@ -40,8 +40,12 @@ public class ControlHospital {
         List<Adreca> adrecas = new ArrayList<Adreca>();
         elObjeto = new Hospital(DAOAdreca.getAdreca().get(0));
         elObjeto.malalties = DAOMalaltia.MalaltiasIN();
+        System.out.println("S'han carregat "+elObjeto.malalties.size()+" malalties.");
+        System.out.println(elObjeto.malalties.get(0));
         elObjeto.metges = DAOMetge.Metges();
+        System.out.println("S'han carregat "+elObjeto.metges.size()+" metges.");
         elObjeto.pacients = DAOPaciente.getPacients();
+        System.out.println("S'han carregat "+elObjeto.pacients.size()+" pacients.");
     }
 
     public boolean guardarSession() {
