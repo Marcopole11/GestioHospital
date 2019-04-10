@@ -48,8 +48,7 @@ public abstract class Persona {
         }
         this.numSegSocial = checkNumSeg(numSegSocial); 
         this.nif = checkDNI(nif);
-        System.out.println(tel);
-        //checkTel(tel);
+        checkTel(tel);
     }
     private static boolean esAlfanumerico(String dato) {
         if (isNotAlfanumeric(dato)) {
